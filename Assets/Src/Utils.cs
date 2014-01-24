@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Utils : MonoBehaviour{
 
+	public const float c_HexRadius = 0.5f;
+
 	public static Vector3 Slerp(Vector3 actualPosition, Vector3 targetPosition, float speed)
 	{
 		Vector3 delta_ = (targetPosition - actualPosition).normalized * speed * Time.deltaTime;

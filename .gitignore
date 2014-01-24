@@ -5,3 +5,5 @@ Assembly-CSharp.csproj
 NaftaPunk-csharp.sln
 NaftaPunk.sln
 NaftaPunk.userprefs
+Assembly-CSharp-Editor-vs.csproj
+Assembly-CSharp-Editor.csproj

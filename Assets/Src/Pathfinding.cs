@@ -1,4 +1,4 @@
-﻿//#define DEBUG
+﻿#define DEBUG
 
 using UnityEngine;
 using System.Collections;
@@ -20,10 +20,12 @@ public class Pathfinding : MonoBehaviour
 		_PathfindingRayList.Clear();
 #endif
 
-		float distance_ = (target.transform.position - walker.transform.position).magnitude;
+		float distanceOneTile = Utils.c_HexRadius * Mathf.Sqrt (3);
+		int distance_ = (int) Mathf.Ceil( (target.transform.position - walker.transform.position).magnitude / distanceOneTile);
 		GameObject ret_ = null;
 		GameObject temp_ = null;
 		Vector3 checkPosition_;
+
 
 		for ( int i = 0; i < (int) distance_+1; ++i )
 		{
@@ -55,7 +57,7 @@ public class Pathfinding : MonoBehaviour
 
 	Vector3 GetPositionBetween(Trooper walker, Vector3 targetPosition, int index)
 	{
-		return walker.transform.position + walker._Body.transform.rotation * Vector3.back * index;
+		return walker.transform.position + walker._Body.transform.rotation * Vector3.back * index * Utils.c_HexRadius * Mathf.Sqrt (3);
 	}
 
 	GameObject GetTileBelow(Vector3 position)
