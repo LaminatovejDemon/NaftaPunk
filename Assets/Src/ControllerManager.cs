@@ -7,13 +7,6 @@ public class ControllerManager : MonoBehaviour
 
 	public static ControllerManager GetInstance()
 	{
-		if ( _Instance == null )
-		{
-			_Instance = new GameObject().AddComponent<ControllerManager>();
-			_Instance.name = "_ControllerManager";
-			_Instance.transform.parent = null;
-		}
-
 		return _Instance;
 	}
 
@@ -24,7 +17,6 @@ public class ControllerManager : MonoBehaviour
 
 	public void OnTouchDown(GameObject source)
 	{
-		Debug.Log (source + " OnTouchDown");
 	}
 
 	public void OnTouchUp(GameObject source)
@@ -35,8 +27,10 @@ public class ControllerManager : MonoBehaviour
 		{
 			SquadManager.GetInstance().SelectTrooper(selected_);
 		}
-
-		Debug.Log (source + " OnTouchUp");
+		else
+		{
+			SquadManager.GetInstance().OrderTrooper(source);
+		}
 	}
 
 	public void OnDrawGizmos()
