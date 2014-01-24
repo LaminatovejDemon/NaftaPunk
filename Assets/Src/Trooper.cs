@@ -34,10 +34,14 @@ public class Trooper : MonoBehaviour {
 	{
 		Vector3 targetPos_ = target.transform.position;
 		targetPos_.y = transform.position.y;
-		return Quaternion.LookRotation(transform.position - target.transform.position).eulerAngles.y;                                   
+		float ret_ = Quaternion.LookRotation(transform.position - target.transform.position).eulerAngles.y;                                   
+
+		ret_ = (int)((ret_+30.0f)/60.0f) * 60;
+
+		return ret_;
 	}
 
-	Vector3 _TargetPosition;
+	public Vector3 _TargetPosition {get; private set;}
 
 	public void SetDirection(GameObject target)
 	{
@@ -51,8 +55,17 @@ public class Trooper : MonoBehaviour {
 
 	public void Walk(GameObject target)
 	{
-		_TargetPosition = target.transform.localPosition;
-		_TargetPosition.y = transform.position.y;
+		if ( target == null )
+		{
+			return;
+		}
+
+		target.renderer.material = SquadManager.GetInstance().TrooperEnemyMaterial;
+		Vector3 targetPos_ = target.transform.position;
+		targetPos_.y = transform.position.y;
+		_TargetPosition = targetPos_;
+
+		SquadManager.GetInstance().SetCenterPoint();
 	}
 
 	void Start()
@@ -91,25 +104,14 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 
-		Vector3 delta_ = (_TargetPosition - transform.position).normalized * WALKING_SPEED * Time.deltaTime;
-
-		Debug.Log ("dot: " + Vector3.Dot(_TargetPosition - transform.position, _TargetPosition - transform.position - delta_));
-
-		if ( Vector3.Dot(_TargetPosition - transform.position, _TargetPosition - transform.position + delta_) <= 0 )
-		{
-			transform.position = _TargetPosition;
-		}
-		else
-		{
-			transform.position += delta_;
-		}
+		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
 	}
 
 	void UpdateRotation()
 	{
 		_ActualAngle = _TargetAngle;
 		
-		transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
+	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
 	}
 
 }
