@@ -21,8 +21,23 @@ public class SquadManager : MonoBehaviour {
 	{
 		_Instance = this;
 	}
-
+	
 	Trooper _SelectedTrooper;
+
+	public void OrderTrooper(GameObject direction)
+	{
+		if ( _SelectedTrooper != null )
+		{
+			if ( !_SelectedTrooper.HasDirection(direction) )
+			{
+				_SelectedTrooper.SetDirection(direction);
+			}
+			else
+			{
+				_SelectedTrooper.Walk(direction);
+			}
+		}
+	}
 
 	public void SelectTrooper(Trooper trooper)
 	{

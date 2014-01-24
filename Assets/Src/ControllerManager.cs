@@ -35,6 +35,10 @@ public class ControllerManager : MonoBehaviour
 		{
 			SquadManager.GetInstance().SelectTrooper(selected_);
 		}
+		else
+		{
+			SquadManager.GetInstance().OrderTrooper(source);
+		}
 
 		Debug.Log (source + " OnTouchUp");
 	}
