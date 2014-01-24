@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SquadManager : MonoBehaviour {
+
+	public Material TrooperAllyMaterial;
+	public Material TrooperEnemyMaterial;
+
+	public List<Trooper> _AllyList = new List<Trooper>();
+	public List<Trooper> _EnemyList = new List<Trooper>();
 
 	private static SquadManager _Instance = null;
 	
@@ -39,6 +46,22 @@ public class SquadManager : MonoBehaviour {
 		}
 	}
 
+	public void RegisterTrooper(Trooper target, Trooper.Fraction fraction)
+	{
+		List<Trooper> targetList_ = fraction == Trooper.Fraction.F_Enemy ? _EnemyList : _AllyList;
+		List<Trooper> excludedList_ = fraction == Trooper.Fraction.F_Enemy ? _AllyList : _EnemyList;
+
+		if ( excludedList_.Contains(target) )
+		{
+			excludedList_.Remove(target);
+		}
+
+		if ( !targetList_.Contains(target) )
+		{
+			targetList_.Add(target);
+		}
+	}
+	
 	public void SelectTrooper(Trooper trooper)
 	{
 		Debug.Log ("Selecting trooper" + trooper + " after " + _SelectedTrooper);
