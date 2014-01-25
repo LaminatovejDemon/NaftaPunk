@@ -49,6 +49,7 @@ public class AttackHandler : MonoBehaviour
 			if ( _Target._HealthBar._Health <= 0 )
 			{
 				SetTarget(null);
+				return;
 			}
 
 			_Target._HealthBar._Health -= _Attacker.ATTACK * (float)_Attacker._SkillAttack * Time.deltaTime;
