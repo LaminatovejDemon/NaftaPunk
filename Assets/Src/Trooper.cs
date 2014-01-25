@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Trooper : MonoBehaviour {
 
@@ -55,15 +56,16 @@ public class Trooper : MonoBehaviour {
 		return _TargetAngle == GetTargetAngle(target);
 	}
 
-	public void Walk(GameObject target)
+	public void Walk(List<GameObject> path)
 	{
-		if ( target == null )
+		if ( path == null || path.Count == 0 )
 		{
 			return;
 		}
 
-		target.renderer.material = SquadManager.GetInstance().TrooperEnemyMaterial;
-		Vector3 targetPos_ = target.transform.position;
+		GameObject waypoint = path [0];
+		waypoint.renderer.material = SquadManager.GetInstance().TrooperEnemyMaterial;
+		Vector3 targetPos_ = waypoint.transform.position;
 		targetPos_.y = transform.position.y;
 		_TargetPosition = targetPos_;
 

@@ -97,11 +97,12 @@ public class SquadManager : MonoBehaviour {
 
 			GameObject targetBelow_ = _Pathfinding.GetTileBelow(targetList_[i].transform.position);
 
-			if ( _Pathfinding.GetPath(watcher, targetBelow_) == targetBelow_ )
+			// FIXME
+/*			if ( _Pathfinding.GetPath(watcher, targetBelow_) == targetBelow_ )
 			{
 				closestTrooper_ = targetList_[i];
 				closestDelta_ = delta_;
-			}
+			}*/
 		}
 
 		return closestTrooper_;
