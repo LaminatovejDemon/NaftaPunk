@@ -17,6 +17,7 @@ public class Trooper : MonoBehaviour {
 
 	public GameObject _HighlightCircle;
 	public GameObject _Body;
+	public AttackHandler _AttackHandler;
 
 	public bool _Selected = false;
 
@@ -82,6 +83,7 @@ public class Trooper : MonoBehaviour {
 		UpdateSetting();
 		UpdateRotation();
 		UpdatePosition();
+		Watch();
 	}
 
 	void UpdateSetting()
@@ -97,6 +99,8 @@ public class Trooper : MonoBehaviour {
 		}
 
 		_FractionLocal = _Fraction;
+		collider.enabled = _FractionLocal == Fraction.F_Ally;
+
 		SquadManager.GetInstance().RegisterTrooper(this, _FractionLocal);
 		_Body.renderer.material = _FractionLocal == Fraction.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
 	}
@@ -110,8 +114,6 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 	
-		Watch();
-
 		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
 	}
 
@@ -124,18 +126,7 @@ public class Trooper : MonoBehaviour {
 
 		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
 
-		Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
-	}
-
-	void Attack(Trooper target)
-	{
-		if ( target == null )
-		{
-			return;
-		}
-
-		target._Body.renderer.material.color = Color.red;
-		target.Watch();
+		_AttackHandler.Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
 	}
 
 	void UpdateRotation()
@@ -147,8 +138,6 @@ public class Trooper : MonoBehaviour {
 		_ActualAngle = _TargetAngle;
 		
 	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
-
-		Watch();
 	}
 
 }
