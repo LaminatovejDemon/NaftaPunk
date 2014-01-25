@@ -45,6 +45,14 @@ public class UIManager : MonoBehaviour
 		_RegisteredTrooperList.Add(target);
 	}
 
+	public void SetStats(Trooper target)
+	{
+		if ( _RegisteredTrooperList.Contains(target) )
+		{
+			_RegisteredTrooperPortraits[_RegisteredTrooperList.IndexOf(target)].GetComponent<UIPortrait>().SetStats(target);
+		}
+	}
+
 	public void RegisterTrooper(Trooper target, bool state)
 	{
 		if ( _RegisteredTrooperList.Contains(target) )

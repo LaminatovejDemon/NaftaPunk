@@ -15,8 +15,13 @@ public class Trooper : MonoBehaviour {
 	public string NAME = "Abdul";
 
 	public int _SkillSpeed = 1;
+	int _SkillSpeedLocal = -1;
+
 	public int _SkillHealth = 1;
+	int _SkillHealthLocal = -1;
+
 	public int _SkillAttack = 1;
+	int _SkillAttackLocal = -1;
 
 	public enum Fraction
 	{
@@ -97,7 +102,32 @@ public class Trooper : MonoBehaviour {
 		UpdateSetting();
 		UpdateRotation();
 		UpdatePosition();
+		UpdateStats();
 		Watch();
+	}
+
+	void UpdateStats()
+	{
+		if ( _SkillAttack != _SkillAttackLocal )
+		{
+			_SkillAttackLocal = Mathf.Clamp(_SkillAttack, 0, 10);
+			_SkillAttack = _SkillAttackLocal;
+			UIManager.GetInstance().SetStats(this);
+		}
+
+		if ( _SkillHealth != _SkillHealthLocal )
+		{
+			_SkillHealthLocal = Mathf.Clamp(_SkillHealth, 0, 10);
+			_SkillHealth = _SkillHealthLocal;
+			UIManager.GetInstance().SetStats(this);
+		}
+
+		if ( _SkillSpeed != _SkillSpeedLocal )
+		{
+			_SkillSpeedLocal = Mathf.Clamp(_SkillSpeed, 0, 10);
+			_SkillSpeed = _SkillSpeedLocal;
+			UIManager.GetInstance().SetStats(this);
+		}
 	}
 
 	void UpdateSetting()
