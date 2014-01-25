@@ -99,11 +99,18 @@ public class Trooper : MonoBehaviour {
 		if ( path == null || path.Count == 0 )
 		{
 			// zastavi postavu
-			path.Add(SquadManager.GetInstance()._Pathfinding.GetTileBelow(transform.position));
+			Stop ();
 			return;
 		}
 
 		_WalkList = path;
+		_Walking = false;
+	}
+
+	public void Stop()
+	{
+		_WalkList = new List<GameObject>();
+		_WalkList.Add(SquadManager.GetInstance()._Pathfinding.GetTileBelow(transform.position));
 		_Walking = false;
 	}
 
@@ -205,6 +212,17 @@ public class Trooper : MonoBehaviour {
 	void UpdatePosition()
 	{
 		PullWalkPoint();
+
+		if( _Fraction == Fraction.F_Ally )
+		{
+			Vector3 walkDir = (_TargetPosition - transform.position).normalized;
+			GameObject hexInFront = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position + walkDir * Utils.c_HexRadius * Mathf.Sqrt (3));
+			if( SquadManager.GetInstance().IsAnyTrooperOnHex(hexInFront) )
+			{
+				Stop ();
+				PullWalkPoint();
+			}
+		}
 
 		transform.position = Utils.Slerp(transform.position, _TargetPosition, (float)_SkillSpeed * WALKING_SPEED);
 

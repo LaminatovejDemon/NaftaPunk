@@ -40,7 +40,7 @@ public class SquadManager : MonoBehaviour
 			}
 			else
 			{
-				_SelectedTrooper.Walk(_Pathfinding.GetPath(_SelectedTrooper, direction));
+				_SelectedTrooper.Walk(_Pathfinding.GetPath(_SelectedTrooper, direction, true));
 			}
 		}
 	}
