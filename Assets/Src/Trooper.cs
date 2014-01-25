@@ -53,6 +53,7 @@ public class Trooper : MonoBehaviour {
 	public GameObject _Body;
 	public AttackHandler _AttackHandler;
 	public HealthBar _HealthBar;
+	public GameObject _Grail;
 
 	public bool _Selected = false;
 
@@ -323,11 +324,21 @@ public class Trooper : MonoBehaviour {
 	public void CarryGrail()
 	{
 		m_CarriesGrail = true;
+		_Grail.renderer.enabled = true;
 	}
 
 	public void DropGrail()
 	{
-		m_CarriesGrail = true;
+		if( !m_CarriesGrail )
+			return;
+
+		m_CarriesGrail = false;
+		_Grail.renderer.enabled = false;
+
+		GameObject tile = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position);
+		HexData tileData = tile.GetComponent<HexData> ();
+		tileData.m_Grail = true;
+		tileData.SetTexture ();
 	}
 
 	public bool IsCarryingGrail()

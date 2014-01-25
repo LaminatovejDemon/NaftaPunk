@@ -99,7 +99,10 @@ public class SquadManager : MonoBehaviour
 		_EnemyList.Remove(target);
 
 		if( target._Fraction == Trooper.Fraction.F_Ally )
+		{
+			target.DropGrail();
 			target.gameObject.SetActive(false);
+		}
 
 		UIManager.GetInstance().RegisterTrooper(target, false);
 
@@ -300,5 +303,18 @@ public class SquadManager : MonoBehaviour
 		}
 		
 		return null;
+	}
+
+	// pouze na test
+	public void KillGrailCarrier()
+	{
+		foreach( Trooper t in _AllyList )
+		{
+			if( t.IsCarryingGrail() )
+			{
+				OnKilled(t);
+				return;
+			}
+		}
 	}
 }

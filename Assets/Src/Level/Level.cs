@@ -10,6 +10,8 @@ public class Level : MonoBehaviour
 		return _Instance;
 	}
 
+	public GameObject m_SkillPointTemplate;
+
 	List<GameObject> m_StartPositions = new List<GameObject> ();
 	List<GameObject> m_SkillPointPositions = new List<GameObject> ();
 	private int m_TroopersKilled = 0;
@@ -31,6 +33,10 @@ public class Level : MonoBehaviour
 		if( m_TroopersKilled == 3 )
 		{
 		}
+
+		if( Input.GetKey(KeyCode.Space) )
+		{
+		}
 	}
 	
 	void Init()
@@ -46,7 +52,13 @@ public class Level : MonoBehaviour
 
 				// skillpoint positions
 				if( hexData.m_SkillPoint )
+				{
 					m_SkillPointPositions.Add(hexData.gameObject);
+
+					GameObject go = GameObject.Instantiate(m_SkillPointTemplate) as GameObject;
+					go.transform.position = hexData.transform.position + 0.5f*Vector3.up;
+					go.transform.parent = hexData.transform;
+				}
 			}
 		}
 
@@ -92,7 +104,7 @@ public class Level : MonoBehaviour
 
 	public void LevelDone()
 	{
-		Debug.Log ("Level done");
+		//UIManager.GetInstance().r
 	}
 
 	void GameOver()

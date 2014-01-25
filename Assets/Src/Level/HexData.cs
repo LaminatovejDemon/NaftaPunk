@@ -30,7 +30,7 @@ public class HexData : MonoBehaviour
 		ResetSpawner ();
 	}
 
-	void SetTexture()
+	public void SetTexture()
 	{
 		m_HexType = Random.Range(0,16);
 		
@@ -145,6 +145,7 @@ public class HexData : MonoBehaviour
 				tr.CarryGrail();
 				m_Grail = false;
 				SetTexture();
+				return;
 			}
 		}
 	}
@@ -161,6 +162,7 @@ public class HexData : MonoBehaviour
 		if ( (transform.position - tr.transform.position).magnitude > Trooper.WALKING_TOLERANCE )
 			return;
 
+		transform.GetChild (0).renderer.enabled = false;
 		Level.GetInstance ().SkillPointPickedUp ();
 		m_SkillPoint = false;
 	}
