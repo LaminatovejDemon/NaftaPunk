@@ -79,6 +79,8 @@ public class SquadManager : MonoBehaviour {
 			targetList_.Add(target);
 			SetCenterPoint();
 		}
+
+		UIManager.GetInstance().RegisterTrooper(target, fraction == Trooper.Fraction.F_Ally);
 	}
 	
 	public void SelectTrooper(Trooper trooper)

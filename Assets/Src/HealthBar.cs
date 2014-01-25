@@ -26,6 +26,8 @@ public class HealthBar : MonoBehaviour
 
 	public void UpdateHealth()
 	{
+		_MaxHealth = _Owner.HEALTH * (float)_Owner._SkillHealth;
+
 		if ( _HealthLocal != _Health )
 		{
 			_Health = Mathf.Max(0, _Health);

@@ -6,7 +6,7 @@ public class AttackHandler : MonoBehaviour
 	public Trooper _Attacker;
 	public Trooper _Target;
 
-	public float _Damage;
+	//public float _Damage;
 
 	float _NextWatchTimestamp = -1;
 
@@ -40,7 +40,7 @@ public class AttackHandler : MonoBehaviour
 	{
 		if ( _Target != null )
 		{
-			_Target._HealthBar._Health -= _Damage * Time.deltaTime;
+			_Target._HealthBar._Health -= _Attacker.ATTACK * (float)_Attacker._SkillAttack * Time.deltaTime;
 			_Target._HealthBar.UpdateHealth();
 		}
 		else
