@@ -60,7 +60,7 @@ public class Pathfinding : MonoBehaviour
 		return walker.transform.position + walker._Body.transform.rotation * Vector3.back * index * Utils.c_HexRadius * Mathf.Sqrt (3);
 	}
 
-	GameObject GetTileBelow(Vector3 position)
+	public GameObject GetTileBelow(Vector3 position)
 	{
 		Ray ray_ = new Ray(position + Vector3.up * 2.0f, Vector3.down);
 #if DEBUG
