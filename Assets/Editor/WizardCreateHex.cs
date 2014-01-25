@@ -5,33 +5,6 @@ using System.Collections;
 
 public class WizardCreateHex : ScriptableWizard
 {
-   
-/*    public enum Orientation
-    {
-        Horizontal,
-        Vertical
-    }
-
-    public enum AnchorPoint
-    {
-        TopLeft,
-        TopHalf,
-        TopRight,
-        RightHalf,
-        BottomRight,
-        BottomHalf,
-        BottomLeft,
-        LeftHalf,
-        Center
-    }
-   
-    public int widthSegments = 1;
-    public int lengthSegments = 1;
-    public float width = 1.0f;
-    public float length = 1.0f;
-    public Orientation orientation = Orientation.Horizontal;
-    public AnchorPoint anchor = AnchorPoint.Center;
-    */
     public string optionalName;
 	public float radius;
     public bool createAtOrigin = true;
@@ -66,49 +39,6 @@ public class WizardCreateHex : ScriptableWizard
         else
             hex.transform.position = Vector3.zero;
        
-/*        Vector2 anchorOffset;
-        string anchorId;
-        switch (anchor)
-        {
-        case AnchorPoint.TopLeft:
-            anchorOffset = new Vector2(-width/2.0f,length/2.0f);
-            anchorId = "TL";
-            break;
-        case AnchorPoint.TopHalf:
-            anchorOffset = new Vector2(0.0f,length/2.0f);
-            anchorId = "TH";
-            break;
-        case AnchorPoint.TopRight:
-            anchorOffset = new Vector2(width/2.0f,length/2.0f);
-            anchorId = "TR";
-            break;
-        case AnchorPoint.RightHalf:
-            anchorOffset = new Vector2(width/2.0f,0.0f);
-            anchorId = "RH";
-            break;
-        case AnchorPoint.BottomRight:
-            anchorOffset = new Vector2(width/2.0f,-length/2.0f);
-            anchorId = "BR";
-            break;
-        case AnchorPoint.BottomHalf:
-            anchorOffset = new Vector2(0.0f,-length/2.0f);
-            anchorId = "BH";
-            break;
-        case AnchorPoint.BottomLeft:
-            anchorOffset = new Vector2(-width/2.0f,-length/2.0f);
-            anchorId = "BL";
-            break;         
-        case AnchorPoint.LeftHalf:
-            anchorOffset = new Vector2(-width/2.0f,0.0f);
-            anchorId = "LH";
-            break;         
-        case AnchorPoint.Center:
-        default:
-            anchorOffset = Vector2.zero;
-            anchorId = "C";
-            break;
-        }*/
-               
         MeshFilter meshFilter = (MeshFilter)hex.AddComponent(typeof(MeshFilter));
         hex.AddComponent(typeof(MeshRenderer));
 

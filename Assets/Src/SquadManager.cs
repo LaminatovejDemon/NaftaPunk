@@ -43,6 +43,21 @@ public class SquadManager : MonoBehaviour
 		}
 	}
 
+	public void OrderEnemyTrooper(Trooper enemy, GameObject direction)
+	{
+		if ( enemy != null )
+		{
+			if ( !enemy.HasDirection(direction) )
+			{
+				enemy.SetDirection(direction);
+			}
+			else
+			{
+				enemy.Walk(_Pathfinding.GetPath(enemy, direction));
+			}
+		}
+	}
+	
 	public void OnKilled(Trooper target)
 	{
 		_AllyList.Remove(target);
@@ -97,6 +112,43 @@ public class SquadManager : MonoBehaviour
 
 		return Path_[0] == targetBelow_;
 	}
+
+	private Trooper GetNearestEnemyTrooper(Trooper watcher)
+	{
+		List<Trooper> targetList_ = _AllyList;
+
+		Trooper closestTrooper_ = null;
+		float closestDelta_ = float.MaxValue;
+
+		for ( int i = 0; i < targetList_.Count; ++i )
+		{
+			float delta_ = (targetList_[i].transform.position - watcher.transform.position).magnitude;
+			if( delta_ < closestDelta_ )
+			{
+				closestTrooper_ = targetList_[i];
+				closestDelta_ = delta_;
+			}
+		}
+
+		return closestTrooper_;
+	}
+
+	public GameObject GetMoveTargetForEnemy(Trooper searcher)
+	{
+		GameObject res = null;
+
+		Trooper nearestTrooper = GetNearestEnemyTrooper (searcher);
+		if( nearestTrooper != null )
+		{
+			List<GameObject> pathToEnemy = _Pathfinding.GetPath(searcher, _Pathfinding.GetTileBelow(nearestTrooper.transform.position));
+			if( pathToEnemy.Count > 1 )
+				res = pathToEnemy[pathToEnemy.Count-2];
+			else if( pathToEnemy.Count == 1 )
+				res = pathToEnemy[0];
+		}
+
+		return res;
+	}
 	
 	public Trooper GetClosestVisibleTrooper(Trooper watcher, Trooper.Fraction fraction)
 	{
@@ -118,8 +170,6 @@ public class SquadManager : MonoBehaviour
 			{
 				continue;
 			}
-
-			GameObject targetBelow_ = _Pathfinding.GetTileBelow(targetList_[i].transform.position);
 
 			if ( HasVisbility(watcher, targetList_[i]) )
 			{

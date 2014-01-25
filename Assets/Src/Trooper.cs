@@ -49,6 +49,8 @@ public class Trooper : MonoBehaviour {
 
 	public Fraction _Fraction = Fraction.F_Ally;
 	Fraction _FractionLocal = Fraction.F_Invalid;
+
+	private EnemyAI m_EnemyAI;
 	
 	float GetTargetAngle(GameObject target)
 	{
@@ -94,6 +96,7 @@ public class Trooper : MonoBehaviour {
 
 	void Start()
 	{
+		m_EnemyAI = GetComponent<EnemyAI> ();
 		_TargetPosition = transform.position;
 	}
 
@@ -102,8 +105,23 @@ public class Trooper : MonoBehaviour {
 		UpdateSetting();
 		UpdateRotation();
 		UpdatePosition();
+
 		UpdateStats();
-		Watch();
+
+		if ( Time.time < _NextWatchTimestamp )
+		{
+			return;
+		}		
+		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
+
+		if( _Fraction == Fraction.F_Enemy )
+		{
+			m_EnemyAI.UpdateOnDemand();
+		}
+		else
+		{
+			Attack( Watch() );
+		}
 	}
 
 	void UpdateStats()
@@ -184,16 +202,14 @@ public class Trooper : MonoBehaviour {
 		}
 	}
 
-	void Watch()
+	public Trooper Watch()
 	{
-		if ( Time.time < _NextWatchTimestamp )
-		{
-			return;
-		}
+		return SquadManager.GetInstance ().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally);
+	}
 
-		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
-
-		_AttackHandler.Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
+	public void Attack(Trooper target)
+	{
+		_AttackHandler.Attack( target );
 	}
 
 	void UpdateRotation()
