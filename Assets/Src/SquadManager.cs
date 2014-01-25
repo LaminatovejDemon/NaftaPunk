@@ -62,6 +62,10 @@ public class SquadManager : MonoBehaviour
 	
 	public void OnKilled(Trooper target)
 	{
+		if( target.GetSpawner() != null )
+		{
+			target.GetSpawner().ResetSpawner();
+		}
 		_AllyList.Remove(target);
 		_EnemyList.Remove(target);
 		UIManager.GetInstance().RegisterTrooper(target, false);

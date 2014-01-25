@@ -51,6 +51,7 @@ public class Trooper : MonoBehaviour {
 	Fraction _FractionLocal = Fraction.F_Invalid;
 
 	private EnemyAI m_EnemyAI;
+	private HexData m_Spawner;
 	
 	float GetTargetAngle(GameObject target)
 	{
@@ -64,6 +65,16 @@ public class Trooper : MonoBehaviour {
 	}
 
 	public Vector3 _TargetPosition {get; private set;}
+
+	public HexData GetSpawner()
+	{
+		return m_Spawner;
+	}
+
+	public void SetSpawner(HexData spawner)
+	{
+		m_Spawner = spawner;
+	}
 
 	public void SetDirection(GameObject target)
 	{
@@ -87,6 +98,8 @@ public class Trooper : MonoBehaviour {
 	{
 		if ( path == null || path.Count == 0 )
 		{
+			// zastavi postavu
+			path.Add(SquadManager.GetInstance()._Pathfinding.GetTileBelow(transform.position));
 			return;
 		}
 
