@@ -17,7 +17,7 @@ public class MenuAddWalls : EditorWindow
 
 		for ( int i = 0; i < levelRoot.transform.childCount; ++i )
 		{
-			TryAddCeiling(levelRoot.transform.GetChild(i), 60);
+			//TryAddCeiling(levelRoot.transform.GetChild(i), 60);
 			TryAddCeiling(levelRoot.transform.GetChild(i), 300);
 			TryAddCeiling(levelRoot.transform.GetChild(i), 0);
 		}
@@ -27,6 +27,7 @@ public class MenuAddWalls : EditorWindow
 			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 120);
 			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 180);
 			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 240);
+			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 60);
 		}
 	}
 

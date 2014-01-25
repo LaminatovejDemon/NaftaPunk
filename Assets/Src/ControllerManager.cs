@@ -51,7 +51,7 @@ public class ControllerManager : MonoBehaviour
 		RaycastHit rayHit_;
 		_TouchRay = new Ray(origin_, direction_);
 		
-		if ( Physics.Raycast(_TouchRay, out rayHit_, 50) )
+		if ( Physics.Raycast(_TouchRay, out rayHit_, 50, 1<<LayerMask.NameToLayer("Floor") | 1<<LayerMask.NameToLayer("Default")) )
 		{
 			return rayHit_.collider.gameObject;
 		}
