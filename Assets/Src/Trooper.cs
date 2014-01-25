@@ -5,6 +5,7 @@ public class Trooper : MonoBehaviour {
 
 	float WALKING_TOLERANCE = 0.01f;
 	public float WALKING_SPEED = 1.0f;
+	public float WATCH_DELTA_TIME = 0.5f;
 
 	public enum Fraction
 	{
@@ -20,6 +21,7 @@ public class Trooper : MonoBehaviour {
 
 	public void OnSelect(bool state)
 	{
+		collider.enabled = !state;
 		_Selected = state;
 		_HighlightCircle.SetActive(state);
 	}
@@ -97,21 +99,54 @@ public class Trooper : MonoBehaviour {
 		_Body.renderer.material = _FractionLocal == Fraction.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
 	}
 
+	float _NextWatchTimestamp = -1;
+
 	void UpdatePosition()
 	{
 		if ( (transform.position - _TargetPosition).magnitude < WALKING_TOLERANCE )
 		{
 			return;
 		}
+	
+		Watch();
 
 		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
 	}
 
+	void Watch()
+	{
+		if ( Time.time < _NextWatchTimestamp )
+		{
+			return;
+		}
+
+		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
+
+		Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
+	}
+
+	void Attack(Trooper target)
+	{
+		if ( target == null )
+		{
+			return;
+		}
+
+		target._Body.renderer.material.color = Color.red;
+		target.Watch();
+	}
+
 	void UpdateRotation()
 	{
+		if ( _ActualAngle == _TargetAngle )
+		{
+			return;
+		}
 		_ActualAngle = _TargetAngle;
 		
 	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
+
+		Watch();
 	}
 
 }

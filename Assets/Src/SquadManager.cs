@@ -74,10 +74,37 @@ public class SquadManager : MonoBehaviour {
 		}
 	}
 	
-	// Update is called once per frame
-	void Update () 
+	public Trooper GetClosestVisibleTrooper(Trooper watcher, Trooper.Fraction fraction)
 	{
-	
+		List<Trooper> targetList_ = fraction == Trooper.Fraction.F_Ally ? _AllyList : _EnemyList;
+
+		if ( targetList_.Count == 0 )
+		{
+			return null;
+		}
+
+		Trooper closestTrooper_ = null;
+		float closestDelta_ = 0;
+
+		for ( int i = 0; i < targetList_.Count; ++i )
+		{
+			float delta_ = (targetList_[i].transform.position - watcher.transform.position).magnitude;
+
+			if ( closestTrooper_ != null && closestDelta_ <= delta_ )
+			{
+				continue;
+			}
+
+			GameObject targetBelow_ = _Pathfinding.GetTileBelow(targetList_[i].transform.position);
+
+			if ( _Pathfinding.GetPath(watcher, targetBelow_) == targetBelow_ )
+			{
+				closestTrooper_ = targetList_[i];
+				closestDelta_ = delta_;
+			}
+		}
+
+		return closestTrooper_;
 	}
 
 	public void SetCenterPoint()
