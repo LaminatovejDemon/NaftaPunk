@@ -16,6 +16,7 @@ public class Trooper : MonoBehaviour {
 
 	public GameObject _HighlightCircle;
 	public GameObject _Body;
+	public AttackHandler _AttackHandler;
 
 	public bool _Selected = false;
 
@@ -121,18 +122,7 @@ public class Trooper : MonoBehaviour {
 
 		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
 
-		Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
-	}
-
-	void Attack(Trooper target)
-	{
-		if ( target == null )
-		{
-			return;
-		}
-
-		target._Body.renderer.material.color = Color.red;
-		target.Watch();
+		_AttackHandler.Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
 	}
 
 	void UpdateRotation()
