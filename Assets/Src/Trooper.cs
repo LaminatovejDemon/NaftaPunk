@@ -5,9 +5,18 @@ using System.Collections.Generic;
 public class Trooper : MonoBehaviour {
 
 	float WALKING_TOLERANCE = 0.01f;
+
 	public float WALKING_SPEED = 1.0f;
+	public float HEALTH = 10.0f;
+	public float ATTACK = 1.0f;
+
 	public float WATCH_DELTA_TIME = 0.5f;
 	public float SHOOT_ANGLE_DOT = 0.8f;
+	public string NAME = "Abdul";
+
+	public int _SkillSpeed = 1;
+	public int _SkillHealth = 1;
+	public int _SkillAttack = 1;
 
 	public enum Fraction
 	{
@@ -136,7 +145,7 @@ public class Trooper : MonoBehaviour {
 	{
 		PullWalkPoint();
 
-		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
+		transform.position = Utils.Slerp(transform.position, _TargetPosition, (float)_SkillSpeed * WALKING_SPEED);
 
 		if ( (transform.position - _TargetPosition).magnitude < WALKING_TOLERANCE )
 		{
