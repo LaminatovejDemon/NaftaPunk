@@ -22,4 +22,11 @@ public class Utils : MonoBehaviour{
 
 		return actualPosition;
 	}
+
+	public static void SetUV(Material target, int index)
+	{
+		Vector2 uv_ = new Vector2((index % 4) / 4.0f, (index / 4) / 4.0f);
+		Debug.Log("Setting main texture offset to " + uv_);
+		target.mainTextureOffset = uv_;
+	}
 }
