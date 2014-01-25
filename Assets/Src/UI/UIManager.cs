@@ -31,15 +31,20 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-	void RemovePortrait(int index)
+	public List<UIPortrait> GetPortraits()
 	{
-		GameObject.Destroy(_RegisteredTrooperPortraits[index].gameObject);
-
-		_RegisteredTrooperList.RemoveAt(index);
-		_RegisteredTrooperPortraits.RemoveAt(index);
+		return _RegisteredTrooperPortraits;
 	}
 
-	void SortPortraits()
+	void RemovePortrait(int index)
+	{
+		_RegisteredTrooperPortraits[index].gameObject.SetActive(false);
+
+		//_RegisteredTrooperList.RemoveAt(index);
+		//_RegisteredTrooperPortraits.RemoveAt(index);
+	}
+
+	public void SortPortraits()
 	{
 		for ( int i = 0; i < _RegisteredTrooperPortraits.Count; ++i )
 		{
@@ -53,6 +58,12 @@ public class UIManager : MonoBehaviour
 
 	void AddPortrait(Trooper target)
 	{
+		if ( _RegisteredTrooperList.Contains(target) )
+		{
+			_RegisteredTrooperPortraits[_RegisteredTrooperList.IndexOf(target)].gameObject.SetActive(true);
+			return;
+		}
+
 		GameObject portrait_ = (GameObject)GameObject.Instantiate(PortraitContainerTemplate.gameObject);
 		portrait_.name = "Portrait_" + _RegisteredTrooperList.Count;
 		portrait_.transform.parent = transform;

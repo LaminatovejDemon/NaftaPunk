@@ -25,6 +25,21 @@ public class Trooper : MonoBehaviour {
 	public int _SkillAttack = 1;
 	int _SkillAttackLocal = -1;
 
+	public void SkillUpAttack()
+	{
+		++_SkillAttack;
+	}
+
+	public void SkillUpSpeed()
+	{
+		++_SkillHealth;
+	}
+
+	public void SkillUpHealth()
+	{
+		++_SkillSpeed;
+	}
+
 	public Renderer _SkinRenderer;
 
 	public enum Fraction
@@ -78,8 +93,6 @@ public class Trooper : MonoBehaviour {
 
 		ret_ = (int)((ret_+30.0f)/60.0f) * 60 % 360;
 
-		Debug.Log ("Zero point angle is " + ret_);
-		
 		return ret_;
 	}
 
@@ -289,6 +302,7 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 		_ActualAngle = _TargetAngle;
+		_AttackHandler.SetTarget(null);
 
 		Texture tex_ = SquadManager.GetInstance().GetComponent<Atlas>().GetTexture((int)_ActualAngle);
 

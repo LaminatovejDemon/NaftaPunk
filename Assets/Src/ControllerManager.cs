@@ -17,6 +17,7 @@ public class ControllerManager : MonoBehaviour
 
 	public void OnTouchDown(GameObject source)
 	{
+
 	}
 
 	public void OnTouchUpWorld(Vector3 zeroPosition)
@@ -40,8 +41,26 @@ public class ControllerManager : MonoBehaviour
 
 	public void OnDrawGizmos()
 	{
-		Gizmos.color = Color.magenta;
-		Gizmos.DrawLine(_TouchRay.origin, _TouchRay.origin + _TouchRay.direction * 20.0f);
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(_UITouchRay.origin, _UITouchRay.origin + _UITouchRay.direction * 20.0f);
+	}
+
+	Ray _UITouchRay;
+
+	GameObject GetUICollider(Vector2 position)
+	{
+		Vector3 origin_ =  UIManager.GetInstance().camera.ScreenToWorldPoint(position);
+		Vector3 direction_ = UIManager.GetInstance().camera.transform.forward;
+		
+		RaycastHit rayHit_;
+		_UITouchRay = new Ray(origin_ - direction_ * 10.0f, direction_);
+		
+		if ( Physics.Raycast(_UITouchRay, out rayHit_, 50, 1<<LayerMask.NameToLayer("UI")) )
+		{
+			return rayHit_.collider.gameObject;
+		}
+		
+		return null;
 	}
 
 	Ray _TouchRay;
@@ -64,9 +83,19 @@ public class ControllerManager : MonoBehaviour
 		return null;
 	}
 
+	Button _TouchDown = null;
+
 	public void OnTouchDown(Vector2 position)
 	{
-		GameObject touchObjct_ = GetCollider(position);
+		GameObject touchObjct_ = GetUICollider(position);
+		if ( touchObjct_ != null && touchObjct_.GetComponent<Button>() != null )
+		{
+			_TouchDown = touchObjct_.GetComponent<Button>();
+			_TouchDown.OnTouchDown();
+			return;
+		}
+
+		touchObjct_ = GetCollider(position);
 		if ( touchObjct_ != null )
 		{
 			OnTouchDown(touchObjct_);
@@ -75,7 +104,23 @@ public class ControllerManager : MonoBehaviour
 
 	public void OnTouchUp(Vector2 position)
 	{
-		GameObject touchObjct_ = GetCollider(position);
+		GameObject touchObjct_ = GetUICollider(position);
+		if ( _TouchDown != null )
+		{
+			if ( touchObjct_ != null && touchObjct_.GetComponent<Button>() != null && _TouchDown == touchObjct_.GetComponent<Button>() )
+			{
+				touchObjct_.GetComponent<Button>().OnTouchUp();
+			}
+			else
+			{
+				_TouchDown.OnTouchCancel();
+			}
+
+			_TouchDown = null;
+			return;
+		}
+
+		touchObjct_ = GetCollider(position);
 		if ( touchObjct_ != null )
 		{
 			OnTouchUp(touchObjct_);

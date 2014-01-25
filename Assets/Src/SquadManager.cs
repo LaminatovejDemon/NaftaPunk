@@ -36,7 +36,6 @@ public class SquadManager : MonoBehaviour
 		_TargetHighlightInstance.transform.position = position;
 		_TargetHighlightInstance.animation.Stop();
 		_TargetHighlightInstance.animation.Play();
-		Debug.Log ("Highlight");
 	}
 
 	public static SquadManager GetInstance()

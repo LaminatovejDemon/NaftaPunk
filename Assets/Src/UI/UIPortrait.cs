@@ -15,6 +15,10 @@ public class UIPortrait : MonoBehaviour
 	public Renderer _SpeedBackground;
 	public Renderer _NameBackground;
 
+	public Button _HealthSkillButton;
+	public Button _AttackSkillButton;
+	public Button _SpeedSkillButton;
+
 	int _AttackLocal;
 	public int _Attack
 	{
@@ -26,6 +30,14 @@ public class UIPortrait : MonoBehaviour
 			return _AttackLocal;
 		}
 	}
+
+	public void SetButtonVisibility(bool state)
+	{
+		_HealthSkillButton.gameObject.SetActive(state);
+		_SpeedSkillButton.gameObject.SetActive(state);
+		_AttackSkillButton.gameObject.SetActive(state);
+	}
+
 
 	int _SpeedLocal;
 	public int _Speed
@@ -83,6 +95,13 @@ public class UIPortrait : MonoBehaviour
 	public void SetStats(Trooper owner)
 	{
 		_Owner = owner;
+		_AttackSkillButton._Target = owner.gameObject;
+		_AttackSkillButton._Message = "SkillUpAttack";
+		_SpeedSkillButton._Target = owner.gameObject;
+		_SpeedSkillButton._Message = "SkillUpSpeed";
+		_HealthSkillButton._Target = owner.gameObject;
+		_HealthSkillButton._Message = "SkillUpHealth";
+
 		_Name.text = _Owner.NAME;
 		_Health = _Owner._SkillHealth;
 		_Speed = _Owner._SkillSpeed;

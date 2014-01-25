@@ -4,7 +4,7 @@ using System.Collections;
 public class AttackHandler : MonoBehaviour 
 {
 	public Trooper _Attacker;
-	public Trooper _Target;
+	public Trooper _Target { get; private set;}
 
 	//public float _Damage;
 
@@ -15,7 +15,7 @@ public class AttackHandler : MonoBehaviour
 		SetTarget(target);
 	}
 
-	void SetTarget(Trooper target)
+	public void SetTarget(Trooper target)
 	{
 		if (_Target == target) 
 		{
