@@ -19,12 +19,18 @@ public class AttackHandler : MonoBehaviour
 	{
 		if (_Target == target) 
 		{
+			if ( target == null )
+			{
+				_Attacker._GunfireParticle.gameObject.SetActive(false);
+			}
+			
 			return;
 		}
 
 		if (_Target != null)
 		{
 			_Target._Body.renderer.material = _Target._Fraction == Trooper.Fraction.F_Ally ? SquadManager.GetInstance().TrooperAllyMaterial : SquadManager.GetInstance().TrooperEnemyMaterial;
+
 		}
 
 		_Target = target;
@@ -32,7 +38,7 @@ public class AttackHandler : MonoBehaviour
 		if ( _Target != null )
 		{
 			_Target._Body.renderer.material = SquadManager.GetInstance().TrooperHitMaterial;
-
+			_Attacker._GunfireParticle.gameObject.SetActive(true);
 		}
 	}
 
@@ -40,6 +46,11 @@ public class AttackHandler : MonoBehaviour
 	{
 		if ( _Target != null )
 		{
+			if ( _Target._HealthBar._Health <= 0 )
+			{
+				SetTarget(null);
+			}
+
 			_Target._HealthBar._Health -= _Attacker.ATTACK * (float)_Attacker._SkillAttack * Time.deltaTime;
 			_Target._HealthBar.UpdateHealth();
 		}

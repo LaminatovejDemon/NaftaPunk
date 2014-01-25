@@ -14,6 +14,8 @@ public class Trooper : MonoBehaviour {
 	public float SHOOT_ANGLE_DOT = 0.8f;
 	public string NAME = "Abdul";
 
+	public Transform _GunfireParticle;
+
 	public int _SkillSpeed = 1;
 	int _SkillSpeedLocal = -1;
 
@@ -63,11 +65,7 @@ public class Trooper : MonoBehaviour {
 		targetPos_.y = transform.position.y;
 		float ret_ = Quaternion.LookRotation(transform.position - target.transform.position).eulerAngles.y;                                   
 
-
 		ret_ = (int)((ret_+30.0f)/60.0f) * 60;
-
-		Debug.Log ("Object angle is " + ret_);
-
 
 		return ret_;
 	}
@@ -238,6 +236,13 @@ public class Trooper : MonoBehaviour {
 		if ( _WalkList != null && _WalkList.Count > 0 && !_Walking)
 		{
 			_Walking = true;
+
+			if ( _WalkList[0] == null )
+			{
+				_WalkList = null;
+				Debug.Log ("ERROR !!!!");
+				return;
+			}
 
 			Vector3 targetPos_ = _WalkList[0].transform.position;
 			targetPos_.y = transform.position.y;
