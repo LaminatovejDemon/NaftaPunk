@@ -23,6 +23,8 @@ public class Trooper : MonoBehaviour {
 	public int _SkillAttack = 1;
 	int _SkillAttackLocal = -1;
 
+	public Renderer _SkinRenderer;
+
 	public enum Fraction
 	{
 		F_Enemy,
@@ -59,8 +61,27 @@ public class Trooper : MonoBehaviour {
 		targetPos_.y = transform.position.y;
 		float ret_ = Quaternion.LookRotation(transform.position - target.transform.position).eulerAngles.y;                                   
 
+
 		ret_ = (int)((ret_+30.0f)/60.0f) * 60;
 
+		Debug.Log ("Object angle is " + ret_);
+
+
+		return ret_;
+	}
+
+	float GetTargetAngle(Vector3 zeroPoint)
+	{
+		Vector3 targetPos_ = zeroPoint;
+		targetPos_.y = transform.position.y;
+		float ret_ = Quaternion.LookRotation(transform.position - targetPos_).eulerAngles.y;                                   
+
+
+
+		ret_ = (int)((ret_+30.0f)/60.0f) * 60 % 360;
+
+		Debug.Log ("Zero point angle is " + ret_);
+		
 		return ret_;
 	}
 
@@ -76,6 +97,11 @@ public class Trooper : MonoBehaviour {
 		m_Spawner = spawner;
 	}
 
+	public void SetDirection(Vector3 zeroPoint)
+	{
+		_TargetAngle = GetTargetAngle(zeroPoint);
+	}
+	
 	public void SetDirection(GameObject target)
 	{
 		_TargetAngle = GetTargetAngle(target);
@@ -252,6 +278,13 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 		_ActualAngle = _TargetAngle;
+
+		Texture tex_ = SquadManager.GetInstance().GetComponent<Atlas>().GetTexture((int)_ActualAngle);
+
+		if ( tex_ != null )
+		{
+			_SkinRenderer.material.mainTexture = tex_;
+		}
 		
 	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
 	}
