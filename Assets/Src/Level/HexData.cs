@@ -42,11 +42,11 @@ public class HexData : MonoBehaviour
 
 	void UpdateSpawner()
 	{
-		if( SquadManager.GetInstance().SpawnerVisibleByTroopers(this.gameObject) )
-			return;
-
 		if( m_Spawner )
 		{
+			if( SquadManager.GetInstance().SpawnerVisibleByTroopers(this.gameObject) )
+				return;
+			
 			if( m_SpawnedTrooper == null )
 			{
 				if( Time.time < m_SpawnStart + m_SpawnDelay )
