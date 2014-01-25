@@ -3,14 +3,17 @@ using System.Collections;
 
 public class AttackHandler : MonoBehaviour 
 {
+	public Trooper _Attacker;
+	public Trooper _Target;
+
 	public void Attack(Trooper target)
 	{
-		if ( target == null )
-		{
-			return;
-		}
+		_Target = target;
+	}
 
-		target._Body.renderer.material.color = Color.red;
+	void Update()
+	{
+
 	}
 
 }
