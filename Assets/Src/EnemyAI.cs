@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
 	private Trooper m_Owner;
 	private GameObject m_MoveTarget = null;
 	private float m_NextAttackTimestamp = -1;
+	private float m_LastAttacking = false;
 
 	void Start () 
 	{
@@ -19,6 +20,11 @@ public class EnemyAI : MonoBehaviour
 		Trooper enemy = m_Owner.Watch();
 		if( enemy )
 		{
+			if( !m_LastAttacking )
+			{
+				m_LastAttacking = true;
+				m_NextAttackTimestamp = Time.time + ATTACK_DELTA_TIME*Vector3.Distance(enemy.transform.position, m_Owner.transform.position);
+			}
 			if ( Time.time < m_NextAttackTimestamp )
 			{
 				return;
@@ -28,6 +34,7 @@ public class EnemyAI : MonoBehaviour
 		else
 		{
 			m_NextAttackTimestamp = -1;
+			m_LastAttacking = false;
 			m_MoveTarget = FindTarget();
 			if( m_MoveTarget )
 			{

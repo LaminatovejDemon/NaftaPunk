@@ -99,7 +99,7 @@ public class Trooper : MonoBehaviour {
 		if ( path == null || path.Count == 0 )
 		{
 			// zastavi postavu
-			Stop ();
+//			Stop ();
 			return;
 		}
 
@@ -213,7 +213,7 @@ public class Trooper : MonoBehaviour {
 	{
 		PullWalkPoint();
 
-		if( _Fraction == Fraction.F_Ally )
+		//if( _Fraction == Fraction.F_Ally )
 		{
 			Vector3 walkDir = (_TargetPosition - transform.position).normalized;
 			GameObject hexInFront = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position + walkDir * Utils.c_HexRadius * Mathf.Sqrt (3));
