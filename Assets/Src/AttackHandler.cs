@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AttackHandler : MonoBehaviour 
 {
@@ -15,13 +16,26 @@ public class AttackHandler : MonoBehaviour
 		SetTarget(target);
 	}
 
+	public List<Transform> _GunfireContainers;
+
+	void SetGunfire(Trooper.Angle angle, bool state)
+	{
+		_Attacker._GunfireParticle.gameObject.SetActive(state);
+		if ( _GunfireContainers.Count > (int)angle )
+		{
+			_Attacker._GunfireParticle.transform.parent = _GunfireContainers[(int)angle];
+			_Attacker._GunfireParticle.transform.localPosition = Vector3.zero;
+			_Attacker._GunfireParticle.transform.localRotation = Quaternion.identity;
+		}
+	}
+
 	public void SetTarget(Trooper target)
 	{
 		if (_Target == target) 
 		{
 			if ( target == null )
 			{
-				_Attacker._GunfireParticle.gameObject.SetActive(false);
+				SetGunfire(_Attacker._NamedAngle, false);
 			}
 			
 			return;
@@ -38,7 +52,7 @@ public class AttackHandler : MonoBehaviour
 		if ( _Target != null )
 		{
 			_Target._Body.renderer.material = SquadManager.GetInstance().TrooperHitMaterial;
-			_Attacker._GunfireParticle.gameObject.SetActive(true);
+			SetGunfire(_Attacker._NamedAngle, true);
 		}
 	}
 
