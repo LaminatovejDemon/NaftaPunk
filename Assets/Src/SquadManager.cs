@@ -93,7 +93,7 @@ public class SquadManager : MonoBehaviour {
 			return false;
 		}
 
-		return Path_[0] == targetBelow_;
+		return Path_[0] == targetBelow_; // TODO Dot product to check if character is correctly rotated
 	}
 	
 	public Trooper GetClosestVisibleTrooper(Trooper watcher, Trooper.Fraction fraction)
