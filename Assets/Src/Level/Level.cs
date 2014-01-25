@@ -86,7 +86,7 @@ public class Level : MonoBehaviour
 
 		// reset skill pointu
 		m_SkillPointsPickedUp = 0;
-		for( int i = 0; i < m_StartPositions.Count; ++i )
+		for( int i = 0; i < m_SkillPointPositions.Count; ++i )
 		{
 			HexData pos = m_SkillPointPositions[i].GetComponent<HexData>();
 			pos.m_SkillPoint = true;
