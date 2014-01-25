@@ -73,6 +73,13 @@ public class SquadManager : MonoBehaviour {
 			_SelectedTrooper.OnSelect(true);
 		}
 	}
+
+	public bool HasVisbility(Trooper watcher, Trooper target)
+	{
+		GameObject targetBelow_ = _Pathfinding.GetTileBelow(target.transform.position);
+		
+		return _Pathfinding.GetPath(watcher, targetBelow_) == targetBelow_;
+	}
 	
 	public Trooper GetClosestVisibleTrooper(Trooper watcher, Trooper.Fraction fraction)
 	{
@@ -95,9 +102,7 @@ public class SquadManager : MonoBehaviour {
 				continue;
 			}
 
-			GameObject targetBelow_ = _Pathfinding.GetTileBelow(targetList_[i].transform.position);
-
-			if ( _Pathfinding.GetPath(watcher, targetBelow_) == targetBelow_ )
+			if ( HasVisbility(watcher, targetList_[i]) )
 			{
 				closestTrooper_ = targetList_[i];
 				closestDelta_ = delta_;
