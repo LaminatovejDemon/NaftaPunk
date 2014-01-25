@@ -49,6 +49,9 @@ public class Pathfinding : MonoBehaviour
 		List<GameObject>                   path        = new List<GameObject> ();
 
 		GameObject startTile = GetTileBelow (walker.transform.position);
+		if( startTile == null )
+			return path;
+
 		searchSpace.Add(startTile, null);
 		searchQueue.Enqueue(startTile);
 

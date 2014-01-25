@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AttackHandler : MonoBehaviour 
@@ -56,7 +56,7 @@ public class AttackHandler : MonoBehaviour
 
 		_NextWatchTimestamp = Time.time + _Attacker.WATCH_DELTA_TIME;
 
-		if ( !SquadManager.GetInstance().HasVisbility(_Attacker, _Target) )
+		if ( !SquadManager.GetInstance().HasVisibility(_Attacker, _Target.gameObject) )
 		{
 			SetTarget(null);
 		}

@@ -213,15 +213,12 @@ public class Trooper : MonoBehaviour {
 	{
 		PullWalkPoint();
 
-		//if( _Fraction == Fraction.F_Ally )
+		Vector3 walkDir = (_TargetPosition - transform.position).normalized;
+		GameObject hexInFront = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position + walkDir * Utils.c_HexRadius * Mathf.Sqrt (3));
+		if( SquadManager.GetInstance().IsAnyTrooperOnHex(hexInFront) )
 		{
-			Vector3 walkDir = (_TargetPosition - transform.position).normalized;
-			GameObject hexInFront = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position + walkDir * Utils.c_HexRadius * Mathf.Sqrt (3));
-			if( SquadManager.GetInstance().IsAnyTrooperOnHex(hexInFront) )
-			{
-				Stop ();
-				PullWalkPoint();
-			}
+			Stop ();
+			PullWalkPoint();
 		}
 
 		transform.position = Utils.Slerp(transform.position, _TargetPosition, (float)_SkillSpeed * WALKING_SPEED);
