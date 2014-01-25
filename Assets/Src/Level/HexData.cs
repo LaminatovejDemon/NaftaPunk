@@ -12,7 +12,7 @@ public class HexData : MonoBehaviour
 
 	void Start ()
 	{
-		m_SpawnDelay = Random.Range (1f, 3f);
+		m_SpawnDelay = Random.Range (SquadManager.GetInstance().ENEMY_SPAWN_DELAY_MIN, SquadManager.GetInstance().ENEMY_SPAWN_DELAY_MAX);
 		m_HexType = Random.Range(0,16);
 		
 		if ( m_HexType == 13 ) m_HexType = 16; // black ceiling 1

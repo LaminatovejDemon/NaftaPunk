@@ -103,6 +103,11 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 
+		if ( _Fraction == Fraction.F_Ally )
+		{
+			SquadManager.GetInstance().TargetHighlight(path[path.Count-1].transform.position);
+		}
+
 		_WalkList = path;
 		_Walking = false;
 	}

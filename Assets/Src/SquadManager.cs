@@ -11,13 +11,34 @@ public class SquadManager : MonoBehaviour
 	public Material TrooperEnemyMaterial;
 	public Material TrooperHitMaterial;
 
+	public float ENEMY_SPAWN_DELAY_MIN = 5.0f;
+	public float ENEMY_SPAWN_DELAY_MAX = 10.0f;
+	public float DELAY_BEFORE_ATTACK_MULTIPLIER = 1.0f;
+
+	public GameObject TargetHighlightTemplate;
+	GameObject _TargetHighlightInstance;
+
 	public Pathfinding _Pathfinding;
 
 	public List<Trooper> _AllyList = new List<Trooper>();
 	public List<Trooper> _EnemyList = new List<Trooper>();
 
 	private static SquadManager _Instance = null;
-	
+
+	public void TargetHighlight(Vector3 position)
+	{
+		if ( _TargetHighlightInstance == null )
+		{
+			_TargetHighlightInstance = (GameObject)GameObject.Instantiate(TargetHighlightTemplate);
+			_TargetHighlightInstance.name = "#TargetHighligh";
+		}
+
+		_TargetHighlightInstance.transform.position = position;
+		_TargetHighlightInstance.animation.Stop();
+		_TargetHighlightInstance.animation.Play();
+		Debug.Log ("Highlight");
+	}
+
 	public static SquadManager GetInstance()
 	{
 		return _Instance;
