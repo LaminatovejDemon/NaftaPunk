@@ -51,6 +51,14 @@ public class SquadManager : MonoBehaviour
 	
 	Trooper _SelectedTrooper;
 
+	public void OrderTrooper(Vector3 zeroPosition)
+	{
+		if ( _SelectedTrooper != null )
+		{
+			_SelectedTrooper.SetDirection(zeroPosition);
+		}
+	}
+
 	public void OrderTrooper(GameObject direction)
 	{
 		if ( _SelectedTrooper != null )

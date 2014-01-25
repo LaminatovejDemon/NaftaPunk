@@ -19,6 +19,11 @@ public class ControllerManager : MonoBehaviour
 	{
 	}
 
+	public void OnTouchUpWorld(Vector3 zeroPosition)
+	{
+		SquadManager.GetInstance().OrderTrooper(zeroPosition);
+	}
+
 	public void OnTouchUp(GameObject source)
 	{
 		Trooper selected_ = source.GetComponent<Trooper>();
@@ -75,6 +80,23 @@ public class ControllerManager : MonoBehaviour
 		{
 			OnTouchUp(touchObjct_);
 		}
+		else
+		{
+			OnTouchUpWorld(GetZeroPosition(position));
+		}
+	}
+
+	Vector3 GetZeroPosition(Vector2 position)
+	{
+		Vector3 pos1_ = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 1));
+		Vector3 pos2_ = Camera.main.ScreenToWorldPoint(new Vector3(position.x, position.y, 2));
+
+		Vector3 delta_ = (pos1_ - pos2_).normalized;
+		delta_ *= pos1_.y/delta_.y;
+
+		pos1_ -= delta_;
+
+		return pos1_;
 	}
 
 	void Update () 
