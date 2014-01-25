@@ -36,7 +36,7 @@ public class Pathfinding : MonoBehaviour
 		m_DistanceOneTile = Utils.c_HexRadius * Mathf.Sqrt (3);
 	}
 
-	public List<GameObject> GetPath(Trooper walker, GameObject target)
+	public List<GameObject> GetPath(Trooper walker, GameObject target, bool ignoreTroopers = false)
 	{
 
 #if DEBUG
@@ -66,6 +66,12 @@ public class Pathfinding : MonoBehaviour
 				GameObject t = GetTileBelow(checkPosition);
 				if( t == null )
 					continue;
+
+				if( !ignoreTroopers )
+				{
+					if( SquadManager.GetInstance().IsAnyTrooperOnHex(t) && t != target )
+						continue;
+				}
 
 				if( searchSpace.ContainsKey(t) )
 					continue;
@@ -105,29 +111,6 @@ public class Pathfinding : MonoBehaviour
 		}
 		path.Reverse ();
 		return path;
-
-/*		float distanceOneTile = Utils.c_HexRadius * Mathf.Sqrt (3);
-		int distance_ = (int) Mathf.Ceil( (target.transform.position - walker.transform.position).magnitude / distanceOneTile);
-		GameObject ret_ = null;
-		GameObject temp_ = null;
-		Vector3 checkPosition_;
-
-
-		for ( int i = 0; i < (int) distance_+1; ++i )
-		{
-			checkPosition_ = GetPositionBetween(walker, target.transform.position, i);
-
-			temp_ = GetTileBelow(checkPosition_);
-
-			if ( temp_ == null )
-			{
-				return ret_;
-			}
-
-			ret_ = temp_;
-		}
-
-		return temp_;*/
 	}
 
 #if DEBUG

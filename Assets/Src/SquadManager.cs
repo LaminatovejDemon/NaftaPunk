@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class SquadManager : MonoBehaviour {
 
+	public GameObject EnemyTemplate;
+
 	public Material TrooperAllyMaterial;
 	public Material TrooperEnemyMaterial;
 	public Material TrooperHitMaterial;
@@ -204,5 +206,21 @@ public class SquadManager : MonoBehaviour {
 		}
 
 		CameraManager.GetInstance().SetPosition(new Vector3((Mx_ - mx_) * 0.5f + mx_, 0, (Mz_ - mz_) * 0.5f + mz_));
+	}
+
+	public bool IsAnyTrooperOnHex(GameObject hex)
+	{
+		foreach( Trooper t in _AllyList )
+		{
+			if( _Pathfinding.GetTileBelow(t.transform.position) == hex )
+				return true;
+		}
+		foreach( Trooper t in _EnemyList )
+		{
+			if( _Pathfinding.GetTileBelow(t.transform.position) == hex )
+				return true;
+		}
+
+		return false;
 	}
 }

@@ -23,7 +23,6 @@ public class EnemyAI : MonoBehaviour
 			{
 				return;
 			}		
-			Debug.Log("Attack delta: " + Vector3.Distance(m_Owner.transform.position, enemy.transform.position)*ATTACK_DELTA_TIME);
 			m_Owner.Attack(enemy);
 		}
 		else
