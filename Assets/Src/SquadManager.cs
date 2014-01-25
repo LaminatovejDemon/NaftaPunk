@@ -44,7 +44,7 @@ public class SquadManager : MonoBehaviour
 		return _Instance;
 	}
 
-	public void Start()
+	public void Awake()
 	{
 		_Instance = this;
 	}

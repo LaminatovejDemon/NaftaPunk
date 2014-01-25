@@ -3,12 +3,15 @@ using System.Collections;
 
 public class HexData : MonoBehaviour 
 {
+	public bool m_StarterHex;
 	public bool m_Spawner;
 	public int m_HexType;
 
 	private GameObject m_SpawnedTrooper = null;
 	private float m_SpawnDelay;
 	private float m_SpawnStart;
+
+	private bool m_StartPosOccupied = false;
 
 	void Start ()
 	{
@@ -33,6 +36,11 @@ public class HexData : MonoBehaviour
 
 	void OnDrawGizmos() 
 	{
+		if( m_StarterHex )
+		{
+			Gizmos.color = Color.blue;
+			Gizmos.DrawCube (transform.position, new Vector3(0.3f, 0.5f, 0.3f));
+		}
 		if( m_Spawner )
 		{
 			Gizmos.color = Color.yellow;
@@ -66,5 +74,15 @@ public class HexData : MonoBehaviour
 	{
 		m_SpawnedTrooper = null;
 		m_SpawnStart = Time.time;
+	}
+
+	public void OccupyStartPos(bool state)
+	{
+		m_StartPosOccupied = state;
+	}
+
+	public bool StartPosOccupied()
+	{
+		return m_StartPosOccupied;
 	}
 }

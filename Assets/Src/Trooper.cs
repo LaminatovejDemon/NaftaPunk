@@ -122,7 +122,6 @@ public class Trooper : MonoBehaviour {
 	void Start()
 	{
 		m_EnemyAI = GetComponent<EnemyAI> ();
-		_TargetPosition = transform.position;
 	}
 
 	void Update()
@@ -188,6 +187,13 @@ public class Trooper : MonoBehaviour {
 		_FractionLocal = _Fraction;
 		collider.enabled = _FractionLocal == Fraction.F_Ally;
 
+		if( _FractionLocal == Fraction.F_Ally )
+		{
+			HexData startPos = Level.GetInstance().GetFreeStartPos();
+			transform.position = startPos.transform.position;
+			startPos.OccupyStartPos(true);
+			_TargetPosition = transform.position;
+		}
 		SquadManager.GetInstance().RegisterTrooper(this, _FractionLocal);
 		_Body.renderer.material = _FractionLocal == Fraction.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
 	}
