@@ -10,7 +10,12 @@ public class UIPortrait : MonoBehaviour
 	public Transform _HealthSkillContainer;
 	public Transform _SpeedSkillContainer;
 
-	public int _AttackLocal;
+	public Renderer _AttackBackground;
+	public Renderer _HealthBackground;
+	public Renderer _SpeedBackground;
+	public Renderer _NameBackground;
+
+	int _AttackLocal;
 	public int _Attack
 	{
 		set{
@@ -22,7 +27,7 @@ public class UIPortrait : MonoBehaviour
 		}
 	}
 
-	public int _SpeedLocal;
+	int _SpeedLocal;
 	public int _Speed
 	{
 		set{
@@ -34,7 +39,7 @@ public class UIPortrait : MonoBehaviour
 		}
 	}
 
-	public int _HealthLocal;
+	int _HealthLocal;
 	public int _Health
 	{
 		set{
@@ -44,6 +49,22 @@ public class UIPortrait : MonoBehaviour
 		get{
 			return _HealthLocal;
 		}
+	}
+
+	public void OnSelect(bool state)
+	{
+		Material target_ = state ? UIManager.GetInstance().SelectedPortrait : UIManager.GetInstance().DefaultPortrait;
+
+		Color nameColor_ = state ? UIManager.GetInstance().DefaultPortrait.GetColor("_TintColor") : UIManager.GetInstance().SelectedPortrait.GetColor("_TintColor");
+		nameColor_.a = 1.0f;
+		_Name.color = nameColor_;
+
+		_Name.fontStyle = state ? FontStyle.Bold : FontStyle.Normal;
+
+		_AttackBackground.material = target_;
+		_HealthBackground.material = target_;
+		_SpeedBackground.material = target_;
+		_NameBackground.material = target_;
 	}
 
 	void ShowStats(Transform container, int number)

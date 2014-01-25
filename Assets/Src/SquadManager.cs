@@ -62,6 +62,7 @@ public class SquadManager : MonoBehaviour
 	{
 		_AllyList.Remove(target);
 		_EnemyList.Remove(target);
+		UIManager.GetInstance().RegisterTrooper(target, false);
 		GameObject.Destroy(target.gameObject);
 	}
 
@@ -89,6 +90,7 @@ public class SquadManager : MonoBehaviour
 		if ( _SelectedTrooper != null )
 		{
 			_SelectedTrooper.OnSelect(false);
+			UIManager.GetInstance().OnSelect(_SelectedTrooper, false);
 		}
 
 		_SelectedTrooper = trooper;
@@ -96,6 +98,7 @@ public class SquadManager : MonoBehaviour
 		if ( _SelectedTrooper != null )
 		{
 			_SelectedTrooper.OnSelect(true);
+			UIManager.GetInstance().OnSelect(_SelectedTrooper, true);
 		}
 	}
 

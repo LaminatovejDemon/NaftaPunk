@@ -8,7 +8,10 @@ public class UIManager : MonoBehaviour
 	public UIPortrait PortraitContainerTemplate;
 	List<Trooper> _RegisteredTrooperList = new List<Trooper>();
 	List<UIPortrait> _RegisteredTrooperPortraits = new List<UIPortrait>();
-	
+
+	public Material SelectedPortrait;
+	public Material DefaultPortrait;
+
 	public static UIManager GetInstance()
 	{
 		return _Instance;
@@ -19,6 +22,15 @@ public class UIManager : MonoBehaviour
 		_Instance = this;
 	}
 
+	public void OnSelect(Trooper target, bool state)
+	{
+		UIPortrait targetPortrait_ = GetPortrait(target);
+		if ( targetPortrait_ != null )
+		{
+			targetPortrait_.OnSelect(state);
+		}
+	}
+
 	void RemovePortrait(int index)
 	{
 		GameObject.Destroy(_RegisteredTrooperPortraits[index].gameObject);
@@ -27,15 +39,23 @@ public class UIManager : MonoBehaviour
 		_RegisteredTrooperPortraits.RemoveAt(index);
 	}
 
+	void SortPortraits()
+	{
+		for ( int i = 0; i < _RegisteredTrooperPortraits.Count; ++i )
+		{
+			_RegisteredTrooperPortraits[i].transform.position = camera.ViewportToWorldPoint(new Vector3(0,1,0)) 
+				+ Vector3.right * camera.orthographicSize * 0.02f
+					+ Vector3.down * (camera.orthographicSize * 0.02f * (i+1)
+					                  + (i) * _RegisteredTrooperPortraits[i].collider.bounds.extents.y * 2.0f);
+
+		}
+	}
+
 	void AddPortrait(Trooper target)
 	{
 		GameObject portrait_ = (GameObject)GameObject.Instantiate(PortraitContainerTemplate.gameObject);
 		portrait_.name = "Portrait_" + _RegisteredTrooperList.Count;
 		portrait_.transform.parent = transform;
-		portrait_.transform.position = camera.ViewportToWorldPoint(new Vector3(0,1,0)) 
-			+ Vector3.right * camera.orthographicSize * 0.02f
-			+ Vector3.down * (camera.orthographicSize * 0.02f * (_RegisteredTrooperPortraits.Count+1)
-				                  + (_RegisteredTrooperPortraits.Count) * portrait_.collider.bounds.extents.y * 2.0f);
 
 		UIPortrait newPortrait_ = portrait_.GetComponent<UIPortrait>();
 
@@ -45,11 +65,22 @@ public class UIManager : MonoBehaviour
 		_RegisteredTrooperList.Add(target);
 	}
 
-	public void SetStats(Trooper target)
+	UIPortrait GetPortrait(Trooper target)
 	{
 		if ( _RegisteredTrooperList.Contains(target) )
 		{
-			_RegisteredTrooperPortraits[_RegisteredTrooperList.IndexOf(target)].GetComponent<UIPortrait>().SetStats(target);
+			return _RegisteredTrooperPortraits[_RegisteredTrooperList.IndexOf(target)].GetComponent<UIPortrait>();
+		}
+
+		return null;
+	}
+
+	public void SetStats(Trooper target)
+	{
+		UIPortrait targetPortrait_ = GetPortrait(target);
+		if ( targetPortrait_ != null )
+		{
+			targetPortrait_.SetStats(target);
 		}
 	}
 
@@ -60,6 +91,7 @@ public class UIManager : MonoBehaviour
 			if ( !state )
 			{
 				RemovePortrait(_RegisteredTrooperList.IndexOf(target));
+				SortPortraits();
 			}
 			return;
 		}
@@ -70,5 +102,7 @@ public class UIManager : MonoBehaviour
 		}
 
 		AddPortrait(target);
+
+		SortPortraits();
 	}
 }
