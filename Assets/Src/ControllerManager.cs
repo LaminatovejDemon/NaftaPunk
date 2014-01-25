@@ -79,9 +79,9 @@ public class ControllerManager : MonoBehaviour
 
 	void Update () 
 	{
-		//if (Input.GetTouch
+	
 
-#if UNITY_STANDALONE || UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_EDITOR
 		if ( Input.GetMouseButtonDown(0) )
 		{
 			OnTouchDown(Input.mousePosition);
@@ -91,6 +91,23 @@ public class ControllerManager : MonoBehaviour
 			OnTouchUp(Input.mousePosition);
 		}
 		
+#else
+		for ( int i = 0; i < Input.touchCount; ++i )
+		{
+			switch ( Input.GetTouch(i).phase )
+			{
+			case TouchPhase.Began:
+				OnTouchDown(Input.GetTouch(i).position);
+				break;
+			case TouchPhase.Stationary:
+			case TouchPhase.Moved:
+				break;
+			case TouchPhase.Ended:
+			case TouchPhase.Canceled:
+				OnTouchUp(Input.GetTouch(i).position);
+				break;
+			}
+		}
 #endif
 	}
 }

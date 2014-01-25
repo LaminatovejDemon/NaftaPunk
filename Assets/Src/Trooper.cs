@@ -17,6 +17,7 @@ public class Trooper : MonoBehaviour {
 	public GameObject _HighlightCircle;
 	public GameObject _Body;
 	public AttackHandler _AttackHandler;
+	public HealthBar _HealthBar;
 
 	public bool _Selected = false;
 

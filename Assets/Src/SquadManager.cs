@@ -42,6 +42,13 @@ public class SquadManager : MonoBehaviour {
 		}
 	}
 
+	public void OnKilled(Trooper target)
+	{
+		_AllyList.Remove(target);
+		_EnemyList.Remove(target);
+		GameObject.Destroy(target.gameObject);
+	}
+
 	public void RegisterTrooper(Trooper target, Trooper.Fraction fraction)
 	{
 		List<Trooper> targetList_ = fraction == Trooper.Fraction.F_Enemy ? _EnemyList : _AllyList;

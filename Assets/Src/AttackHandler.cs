@@ -6,6 +6,8 @@ public class AttackHandler : MonoBehaviour
 	public Trooper _Attacker;
 	public Trooper _Target;
 
+	public float _Damage;
+
 	float _NextWatchTimestamp = -1;
 
 	public void Attack(Trooper target)
@@ -30,12 +32,24 @@ public class AttackHandler : MonoBehaviour
 		if ( _Target != null )
 		{
 			_Target._Body.renderer.material = SquadManager.GetInstance().TrooperHitMaterial;
+
 		}
 	}
 
 	void Update()
 	{
-		if ( Time.time < _NextWatchTimestamp || _Target == null )
+		if ( _Target != null )
+		{
+			_Target._HealthBar._Health -= _Damage * Time.deltaTime;
+			_Target._HealthBar.UpdateHealth();
+		}
+		else
+		{
+			return;
+		}
+
+
+		if ( Time.time < _NextWatchTimestamp )
 		{
 			return;
 		}
