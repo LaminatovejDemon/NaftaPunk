@@ -26,6 +26,16 @@ public class Trooper : MonoBehaviour {
 	public int _SkillAttack = 1;
 	int _SkillAttackLocal = -1;
 
+	public enum Angle
+	{
+		Angle_0,
+		Angle_60,
+		Angle_120,
+		Angle_180,
+		Angle_240,
+		Angle_300,
+	};
+
 	public void SkillUpAttack()
 	{
 		++_SkillAttack;
@@ -65,6 +75,7 @@ public class Trooper : MonoBehaviour {
 		_HighlightCircle.SetActive(state);
 	}
 
+	public Angle _NamedAngle { get; private set;}
 	float _TargetAngle = 0;
 	float _ActualAngle = -1;
 
@@ -78,6 +89,22 @@ public class Trooper : MonoBehaviour {
 
 	private List<Texture> _BodyTextureSet;
 	private List<Texture> _LegsTextureSet;
+
+	Angle GetNamedAngle(float angle)
+	{
+		if ( angle > 270 )
+			return Angle.Angle_300;
+		else if ( angle > 210 )
+			return Angle.Angle_240;
+		else if ( angle > 150 )
+			return Angle.Angle_180;
+		else if ( angle > 90 )
+			return Angle.Angle_120;
+		else if ( angle > 30 )
+			return Angle.Angle_60;
+		else
+			return Angle.Angle_0;
+	}
 	
 	float GetTargetAngle(GameObject target)
 	{
@@ -118,11 +145,13 @@ public class Trooper : MonoBehaviour {
 	public void SetDirection(Vector3 zeroPoint)
 	{
 		_TargetAngle = GetTargetAngle(zeroPoint);
+		_NamedAngle = GetNamedAngle(_TargetAngle);
 	}
 	
 	public void SetDirection(GameObject target)
 	{
 		_TargetAngle = GetTargetAngle(target);
+		_NamedAngle = GetNamedAngle(_TargetAngle);
 	}
 
 	public bool HasDirection(GameObject target)
