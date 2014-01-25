@@ -34,6 +34,8 @@ public class Trooper : MonoBehaviour {
 
 	public Fraction _Fraction = Fraction.F_Ally;
 	Fraction _FractionLocal = Fraction.F_Invalid;
+
+	private EnemyAI m_EnemyAI;
 	
 	float GetTargetAngle(GameObject target)
 	{
@@ -73,6 +75,7 @@ public class Trooper : MonoBehaviour {
 
 	void Start()
 	{
+		m_EnemyAI = GetComponent<EnemyAI> ();
 		_TargetPosition = transform.position;
 	}
 
@@ -81,7 +84,15 @@ public class Trooper : MonoBehaviour {
 		UpdateSetting();
 		UpdateRotation();
 		UpdatePosition();
-		Watch();
+
+		if( _Fraction == Fraction.F_Enemy )
+		{
+			m_EnemyAI.UpdateOnDemand();
+		}
+		else
+		{
+			Watch();
+		}
 	}
 
 	void UpdateSetting()
