@@ -11,7 +11,7 @@ public class MenuSnapHexes : EditorWindow
 	private static List<GameObject> s_SnappedHexes = new List<GameObject>();
 	private static Queue<GameObject> s_Queue = new Queue<GameObject> (); 
 
-	[@MenuItem("NaftaPunk/Snap Hexes")]
+	[@MenuItem("NaftaPunk/Snap Hexes %&a")]
 	static void SnapHexes()
 	{
 		s_SnappedHexes.Clear ();
@@ -79,43 +79,4 @@ public class MenuSnapHexes : EditorWindow
 			}
 		}
 	}
-
-/*	static void SnapHexes()
-	{
-		GameObject levelRoot = FindObjectsOfType(typeof(Level)) as GameObject;
-		int rowsCount = levelRoot.transform.childCount;
-		if( rowsCount <= 0 )
-			return;
-
-		Physics.OverlapSphere(
-
-		// get max columns
-		int columnsCount = int.MinValue;
-		for( int i = 0; i < rowsCount; ++i )
-		{
-			int c = levelRoot.transform.GetChild(i).childCount;
-			if( c > columnsCount )
-				columnsCount = c;
-		}
-		if( columnsCount <= 0 )
-			return;
-
-		float xMin = -columnsCount / 2;
-		float z = rowsCount * c_HexRadius;
-
-		float zAdd = c_HexRadius * (Mathf.Sqrt (3) / 2);
-		for( int i = 0; i < rowsCount; ++i )
-		{
-			int hexesOnRow = levelRoot.transform.GetChild(i).childCount;
-			float x = 0;
-			for( int j = 0; j < hexesOnRow; ++j )
-			{
-				Transform hexElement = levelRoot.transform.GetChild(i).GetChild(j);
-				hexElement.position = new Vector3(x, 0, z);
-				x += 2 * c_HexRadius;
-			}
-
-			z += zAdd;
-		}
-	}*/
 }

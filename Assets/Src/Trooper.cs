@@ -92,13 +92,19 @@ public class Trooper : MonoBehaviour {
 		UpdateRotation();
 		UpdatePosition();
 
+		if ( Time.time < _NextWatchTimestamp )
+		{
+			return;
+		}		
+		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
+
 		if( _Fraction == Fraction.F_Enemy )
 		{
 			m_EnemyAI.UpdateOnDemand();
 		}
 		else
 		{
-			Watch();
+			Attack( Watch() );
 		}
 	}
 
@@ -156,16 +162,14 @@ public class Trooper : MonoBehaviour {
 		}
 	}
 
-	void Watch()
+	public Trooper Watch()
 	{
-		if ( Time.time < _NextWatchTimestamp )
-		{
-			return;
-		}
+		return SquadManager.GetInstance ().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally);
+	}
 
-		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
-
-		_AttackHandler.Attack(SquadManager.GetInstance().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally));
+	public void Attack(Trooper target)
+	{
+		_AttackHandler.Attack( target );
 	}
 
 	void UpdateRotation()
