@@ -68,7 +68,6 @@ public class SquadManager : MonoBehaviour {
 	
 	public void SelectTrooper(Trooper trooper)
 	{
-		Debug.Log ("Selecting trooper" + trooper + " after " + _SelectedTrooper);
 		if ( _SelectedTrooper != null )
 		{
 			_SelectedTrooper.OnSelect(false);
@@ -82,13 +81,13 @@ public class SquadManager : MonoBehaviour {
 		}
 	}
 
-	public bool HasVisbility(Trooper watcher, Trooper target)
+	public bool HasVisbility(Trooper watcher, Trooper target, bool mentionAngle = true)
 	{
 		GameObject targetBelow_ = _Pathfinding.GetTileBelow(target.transform.position);
 
 		List<GameObject> Path_ = _Pathfinding.GetPath(watcher, targetBelow_);
 
-		if ( Path_ == null || Path_.Count == 0)
+		if ( Path_ == null || Path_.Count == 0 || (mentionAngle && watcher.GetDot(target.gameObject) < watcher.SHOOT_ANGLE_DOT) )
 		{
 			return false;
 		}

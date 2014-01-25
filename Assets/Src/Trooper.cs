@@ -7,6 +7,7 @@ public class Trooper : MonoBehaviour {
 	float WALKING_TOLERANCE = 0.01f;
 	public float WALKING_SPEED = 1.0f;
 	public float WATCH_DELTA_TIME = 0.5f;
+	public float SHOOT_ANGLE_DOT = 0.8f;
 
 	public enum Fraction
 	{
@@ -58,6 +59,12 @@ public class Trooper : MonoBehaviour {
 	public bool HasDirection(GameObject target)
 	{
 		return _TargetAngle == GetTargetAngle(target);
+	}
+
+	public float GetDot(GameObject target)
+	{
+		float dot_ = Vector3.Dot(_Body.transform.rotation * Vector3.forward, (transform.position - target.transform.position).normalized);
+		return dot_;
 	}
 
 	List<GameObject> _WalkList;
