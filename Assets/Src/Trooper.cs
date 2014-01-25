@@ -231,6 +231,13 @@ public class Trooper : MonoBehaviour {
 		{
 			_Walking = true;
 
+			if ( _WalkList[0] == null )
+			{
+				_WalkList = null;
+				Debug.Log ("ERROR !!!!");
+				return;
+			}
+
 			Vector3 targetPos_ = _WalkList[0].transform.position;
 			targetPos_.y = transform.position.y;
 			_TargetPosition = targetPos_;
