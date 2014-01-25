@@ -25,10 +25,7 @@ public class Pathfinding : MonoBehaviour
 		}
 	}
 
-	Dictionary<GameObject, GameObject>            m_SearchSpace = new Dictionary<GameObject, GameObject> ();
-	Queue<GameObject>                             m_SearchQueue = new Queue<GameObject> ();
-	List<GameObject>                              m_Path        = new List<GameObject> ();
-	float                                         m_DistanceOneTile;
+	float m_DistanceOneTile;
 
 #if DEBUG
 	List<Ray> _PathfindingRayList = new List<Ray>();
@@ -47,17 +44,17 @@ public class Pathfinding : MonoBehaviour
 #endif
 		bool pathFound = false;
 
-		m_SearchSpace.Clear ();
-		m_SearchQueue.Clear ();
-		m_Path.Clear ();
+		Dictionary<GameObject, GameObject> searchSpace = new Dictionary<GameObject, GameObject> ();
+		Queue<GameObject>                  searchQueue = new Queue<GameObject> ();
+		List<GameObject>                   path        = new List<GameObject> ();
 
 		GameObject startTile = GetTileBelow (walker.transform.position);
-		m_SearchSpace.Add(startTile, null);
-		m_SearchQueue.Enqueue(startTile);
+		searchSpace.Add(startTile, null);
+		searchQueue.Enqueue(startTile);
 
-		while( m_SearchQueue.Count > 0 )
+		while( searchQueue.Count > 0 )
 		{
-			GameObject tile = m_SearchQueue.Dequeue();
+			GameObject tile = searchQueue.Dequeue();
 
 			for( int i = 0; i < 6; ++i )
 			{
@@ -70,16 +67,16 @@ public class Pathfinding : MonoBehaviour
 				if( t == null )
 					continue;
 
-				if( m_SearchSpace.ContainsKey(t) )
+				if( searchSpace.ContainsKey(t) )
 					continue;
 
-				m_SearchSpace.Add(t, tile);
-				m_SearchQueue.Enqueue(t);
+				searchSpace.Add(t, tile);
+				searchQueue.Enqueue(t);
 
 				if( t == target )
 				{
 					pathFound = true;
-					m_SearchQueue.Clear();
+					searchQueue.Clear();
 					break;
 				}
 			}
@@ -90,24 +87,24 @@ public class Pathfinding : MonoBehaviour
 			Vector3 lastDir = Vector3.zero;
 			GameObject tBack = target;
 
-			m_Path.Add(tBack);
+			path.Add(tBack);
 			while( tBack != startTile )
 			{
-				GameObject t = m_SearchSpace[tBack];
+				GameObject t = searchSpace[tBack];
 				Vector3 dir = (t.transform.position - tBack.transform.position).normalized;
 
 				if( lastDir == Vector3.zero )
 					lastDir = dir;
 				if( Vector3.Dot(lastDir, dir) < 0.9962 )
 				{
-					m_Path.Add(tBack);
+					path.Add(tBack);
 				}
 				lastDir = dir;
 				tBack = t;
 			}
 		}
-		m_Path.Reverse ();
-		return m_Path;
+		path.Reverse ();
+		return path;
 
 /*		float distanceOneTile = Utils.c_HexRadius * Mathf.Sqrt (3);
 		int distance_ = (int) Mathf.Ceil( (target.transform.position - walker.transform.position).magnitude / distanceOneTile);
