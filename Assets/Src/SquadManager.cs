@@ -6,6 +6,7 @@ public class SquadManager : MonoBehaviour {
 
 	public Material TrooperAllyMaterial;
 	public Material TrooperEnemyMaterial;
+	public Material TrooperHitMaterial;
 
 	public Pathfinding _Pathfinding;
 

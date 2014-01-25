@@ -97,6 +97,8 @@ public class Trooper : MonoBehaviour {
 		}
 
 		_FractionLocal = _Fraction;
+		collider.enabled = _FractionLocal == Fraction.F_Ally;
+
 		SquadManager.GetInstance().RegisterTrooper(this, _FractionLocal);
 		_Body.renderer.material = _FractionLocal == Fraction.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
 	}
