@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
 			if( !m_LastAttacking )
 			{
 				m_LastAttacking = true;
-				m_NextAttackTimestamp = Time.time + SquadManager.GetInstance().DELAY_BEFORE_ATTACK_MULTIPLIER * ATTACK_DELTA_TIME*Vector3.Distance(enemy.transform.position, m_Owner.transform.position);
+				m_NextAttackTimestamp = Time.time + SquadManager.DELAY_BEFORE_ATTACK_MULTIPLIER * ATTACK_DELTA_TIME*Vector3.Distance(enemy.transform.position, m_Owner.transform.position);
 			}
 			if ( Time.time < m_NextAttackTimestamp )
 			{

@@ -7,6 +7,7 @@ public class MenuAddWalls : EditorWindow
 {
 	static CeilingTop _CeilingTop;
 	static CeilingBottom _CeilingBottom;
+	static CeilingRight _CeilingRight;
 
 	[@MenuItem("NaftaPunk/Add Walls %&s")]
 	static void AddWalls()
@@ -14,57 +15,42 @@ public class MenuAddWalls : EditorWindow
 		Level levelRoot = FindObjectOfType(typeof(Level)) as Level;
 		_CeilingTop = FindObjectOfType(typeof(CeilingTop)) as CeilingTop;
 		_CeilingBottom = FindObjectOfType(typeof(CeilingBottom)) as CeilingBottom;
+		_CeilingRight = FindObjectOfType(typeof(CeilingRight)) as CeilingRight;
 
 		for ( int i = 0; i < levelRoot.transform.childCount; ++i )
 		{
-			//TryAddCeiling(levelRoot.transform.GetChild(i), 60);
-			TryAddCeiling(levelRoot.transform.GetChild(i), 300);
-			TryAddCeiling(levelRoot.transform.GetChild(i), 0);
+			TryAddCeiling(levelRoot.transform.GetChild(i), 300, _CeilingTop.CeilingPrefab, _CeilingTop.transform);
+			TryAddCeiling(levelRoot.transform.GetChild(i), 0, _CeilingTop.CeilingPrefab, _CeilingTop.transform);
 		}
 
 		for ( int i = 0; i < levelRoot.transform.childCount; ++i )
 		{
-			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 120);
-			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 180);
-			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 240);
-			TryAddCeilingBottom(levelRoot.transform.GetChild(i), 60);
+			TryAddCeiling(levelRoot.transform.GetChild(i), 60, _CeilingRight.CeilingPrefab, _CeilingRight.transform);
+		}
+
+		for ( int i = 0; i < levelRoot.transform.childCount; ++i )
+		{
+			TryAddCeiling(levelRoot.transform.GetChild(i), 120, _CeilingBottom.CeilingPrefab, _CeilingBottom.transform);
+			TryAddCeiling(levelRoot.transform.GetChild(i), 180, _CeilingBottom.CeilingPrefab, _CeilingBottom.transform);
+			TryAddCeiling(levelRoot.transform.GetChild(i), 240, _CeilingBottom.CeilingPrefab, _CeilingBottom.transform);
 		}
 	}
 
-	static void TryAddCeilingBottom(Transform source, int angle)
+	static void TryAddCeiling(Transform source, int angle, GameObject ceilingTemplate, Transform parent)
 	{
 		Vector3 pos_ = GetPosition(source, angle);
 		if ( !GetTileBelow(pos_) )
 		{
-			AddCeilingBottom(pos_);
+			AddCeiling(pos_, ceilingTemplate, parent);
 		}
 	}
 
-	static void TryAddCeiling(Transform source, int angle)
+	static void AddCeiling(Vector3 position, GameObject template, Transform parent)
 	{
-		Vector3 pos_ = GetPosition(source, angle);
-		if ( !GetTileBelow(pos_) )
-		{
-			AddCeiling(pos_);
-		}
-	}
-
-	static void AddCeiling(Vector3 position)
-	{
-		GameObject new_ = (GameObject)GameObject.Instantiate(_CeilingTop.CeilingPrefab);
-		new_.transform.parent = _CeilingTop.transform;
-		new_.transform.position = position + Vector3.up * 0.5f;
-		//new_.renderer.material.mainTextureOffset = new Vector2(0.25f, 0.75f);
-		new_.name = "CeilingTile";
-	}
-
-	static void AddCeilingBottom(Vector3 position)
-	{
-		GameObject new_ = (GameObject)GameObject.Instantiate(_CeilingBottom.CeilingPrefab);
-		new_.transform.parent = _CeilingBottom.transform;
+		GameObject new_ = (GameObject)GameObject.Instantiate(template);
+		new_.transform.parent = parent;
 		new_.transform.position = position + Vector3.up * 0.5f;
 		//new_.renderer.material.mainTextureOffset = new Vector2(0, 0.75f);
-		new_.name = "CeilingBottomTile";
 	}
 
 	static Vector3 GetPosition(Transform source, int angle)
