@@ -6,6 +6,7 @@ public class Trooper : MonoBehaviour {
 
 	public const float WALKING_TOLERANCE = 0.01f;
 
+	public float DELTA_DISTANCE_PER_LEG_FRAME = 1.0f;
 	public float WALKING_SPEED = 1.0f;
 	public float HEALTH = 10.0f;
 	public float ATTACK = 1.0f;
@@ -40,7 +41,8 @@ public class Trooper : MonoBehaviour {
 		++_SkillSpeed;
 	}
 
-	public Renderer _SkinRenderer;
+	public Renderer _BodySkinRenderer;
+	public Renderer _LegsSkinRenderer;
 
 	public enum Fraction
 	{
@@ -65,7 +67,7 @@ public class Trooper : MonoBehaviour {
 	}
 
 	float _TargetAngle = 0;
-	float _ActualAngle = 0;
+	float _ActualAngle = -1;
 
 	public Fraction _Fraction = Fraction.F_Ally;
 	Fraction _FractionLocal = Fraction.F_Invalid;
@@ -74,6 +76,9 @@ public class Trooper : MonoBehaviour {
 	private HexData m_Spawner;
 
 	private bool m_CarriesGrail = false;
+
+	private List<Texture> _BodyTextureSet;
+	private List<Texture> _LegsTextureSet;
 	
 	float GetTargetAngle(GameObject target)
 	{
@@ -271,9 +276,18 @@ public class Trooper : MonoBehaviour {
 		}
 	}
 
+	Vector3 _LastLegUpdatePosition = Vector3.zero;
+
 	void UpdatePosition()
 	{
+		TrySetLegUpdatePosition();
+
 		PullWalkPoint();
+
+		if ( _TargetPosition == transform.position )
+		{
+			return;
+		}
 
 		Vector3 walkDir = (_TargetPosition - transform.position).normalized;
 		GameObject hexInFront = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position + walkDir * Utils.c_HexRadius * Mathf.Sqrt (3));
@@ -282,6 +296,7 @@ public class Trooper : MonoBehaviour {
 			Stop ();
 			PullWalkPoint();
 		}
+
 
 		transform.position = Utils.Slerp(transform.position, _TargetPosition, (float)_SkillSpeed * WALKING_SPEED);
 
@@ -311,14 +326,52 @@ public class Trooper : MonoBehaviour {
 		_ActualAngle = _TargetAngle;
 		_AttackHandler.SetTarget(null);
 
-		Texture tex_ = SquadManager.GetInstance().GetComponent<Atlas>().GetTexture((int)_ActualAngle);
+		_BodyTextureSet = SquadManager.GetInstance().GetComponent<Atlas>().GetTexture((int)_ActualAngle);
+		_LegsTextureSet = SquadManager.GetInstance().GetComponent<Atlas>().GetLegsTexture((int)_ActualAngle);
 
-		if ( tex_ != null )
+		if ( _BodyTextureSet.Count > 0 )
 		{
-			_SkinRenderer.material.mainTexture = tex_;
+			_BodySkinRenderer.material.mainTexture = _BodyTextureSet[0];
 		}
-		
+
+		SetLegTextureIndex(0);
+
 	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
+	}
+
+	int _CurrentLegTextureIndex = -1;
+
+	void SetLegTextureIndex(int index)
+	{
+		if ( _LegsTextureSet.Count > index )
+		{
+			_CurrentLegTextureIndex = index;
+			_LegsSkinRenderer.material.mainTexture = _LegsTextureSet[_CurrentLegTextureIndex];
+		}
+	}
+
+	void SetNextLegTextureIndex()
+	{
+		if ( _LegsTextureSet.Count == 0 )
+		{
+			return;
+		}
+
+		_CurrentLegTextureIndex = (_CurrentLegTextureIndex + 1) % _LegsTextureSet.Count;
+
+		if ( _LegsTextureSet.Count > _CurrentLegTextureIndex )
+		{
+			_LegsSkinRenderer.material.mainTexture = _LegsTextureSet[_CurrentLegTextureIndex];
+		}
+	}
+
+	void TrySetLegUpdatePosition()
+	{
+		if ( (transform.position - _LastLegUpdatePosition).magnitude > DELTA_DISTANCE_PER_LEG_FRAME )
+		{
+			_LastLegUpdatePosition = transform.position;
+			SetNextLegTextureIndex();
+		}
 	}
 
 	public void CarryGrail()

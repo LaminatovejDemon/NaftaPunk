@@ -305,6 +305,22 @@ public class SquadManager : MonoBehaviour
 		return null;
 	}
 
+	public void KillAllEnemies()
+	{
+		for( int i = _EnemyList.Count -1; i >= 0; --i )
+		{
+			OnKilled(_EnemyList[i]);
+		}
+	}
+
+	public void DropGrailFromAnyone()
+	{
+		foreach( Trooper t in _AllyList )
+		{
+			t.DropGrail();
+		}
+	}
+
 	// pouze na test
 	public void KillGrailCarrier()
 	{
