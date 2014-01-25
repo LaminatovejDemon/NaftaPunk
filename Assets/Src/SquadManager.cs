@@ -110,11 +110,15 @@ public class SquadManager : MonoBehaviour {
 				continue;
 			}
 
-			if ( HasVisbility(watcher, targetList_[i]) )
+			GameObject targetBelow_ = _Pathfinding.GetTileBelow(targetList_[i].transform.position);
+
+			// FIXME
+
+/*			if ( HasVisbility(watcher, targetList_[i]) )
 			{
 				closestTrooper_ = targetList_[i];
 				closestDelta_ = delta_;
-			}
+			}*/
 		}
 
 		return closestTrooper_;
