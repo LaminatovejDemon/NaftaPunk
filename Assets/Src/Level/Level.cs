@@ -11,7 +11,9 @@ public class Level : MonoBehaviour
 	}
 
 	List<GameObject> m_StartPositions = new List<GameObject> ();
+	List<GameObject> m_SkillPointPositions = new List<GameObject> ();
 	private int m_TroopersKilled = 0;
+	private int m_SkillPointsPickedUp = 0;
 
 	void Awake()
 	{
@@ -29,22 +31,25 @@ public class Level : MonoBehaviour
 		if( m_TroopersKilled == 3 )
 		{
 		}
-
-		// test na splneni levelu
 	}
 	
 	void Init()
 	{
-		// troops start position 
 		for( int i = 0; i < transform.childCount; ++i )
 		{
 			HexData hexData = transform.GetChild(i).GetComponent<HexData>();
 			if( hexData != null )
 			{
-				if( hexData.m_StarterHex )
+				// troops start positions 
+				if( hexData.m_Teleport )
 					m_StartPositions.Add(hexData.gameObject);
+
+				// skillpoint positions
+				if( hexData.m_SkillPoint )
+					m_SkillPointPositions.Add(hexData.gameObject);
 			}
 		}
+
 	}
 
 	void Reset()
@@ -58,6 +63,14 @@ public class Level : MonoBehaviour
 			HexData pos = m_StartPositions[i].GetComponent<HexData>();
 			pos.OccupyStartPos(false);
 		}
+
+		// reset skill pointu
+		m_SkillPointsPickedUp = 0;
+		for( int i = 0; i < m_StartPositions.Count; ++i )
+		{
+			HexData pos = m_SkillPointPositions[i].GetComponent<HexData>();
+			pos.m_SkillPoint = true;
+		}
 	}
 
 	public HexData GetFreeStartPos()
@@ -70,6 +83,16 @@ public class Level : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	public void SkillPointPickedUp()
+	{
+		m_SkillPointsPickedUp++;
+	}
+
+	public void LevelDone()
+	{
+		Debug.Log ("Level done");
 	}
 
 	void GameOver()
