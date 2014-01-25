@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour
 	private Trooper m_Owner;
 	private GameObject m_MoveTarget = null;
 	private float m_NextAttackTimestamp = -1;
-	private float m_LastAttacking = false;
+	private bool m_LastAttacking = false;
 
 	void Start () 
 	{
