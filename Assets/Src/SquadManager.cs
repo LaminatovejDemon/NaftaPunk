@@ -257,6 +257,8 @@ public class SquadManager : MonoBehaviour
 	{
 		foreach( Trooper t in _AllyList )
 		{
+			if( _Pathfinding.GetTileBelow(t.transform.position) )
+				return true;
 			if( HasVisibility(t, spawner, false) )
 				return true;
 		}
