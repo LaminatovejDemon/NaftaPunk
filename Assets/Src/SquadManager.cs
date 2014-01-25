@@ -95,10 +95,17 @@ public class SquadManager : MonoBehaviour
 		{
 			target.GetSpawner().ResetSpawner();
 		}
+
 		_AllyList.Remove(target);
 		_EnemyList.Remove(target);
+
+		if( target._Fraction == Trooper.Fraction.F_Ally )
+			target.gameObject.SetActive(false);
+
 		UIManager.GetInstance().RegisterTrooper(target, false);
-		GameObject.Destroy(target.gameObject);
+
+		if( target._Fraction == Trooper.Fraction.F_Enemy )
+			GameObject.Destroy(target.gameObject);
 	}
 
 	public void RegisterTrooper(Trooper target, Trooper.Fraction fraction)
@@ -245,20 +252,31 @@ public class SquadManager : MonoBehaviour
 		CameraManager.GetInstance().SetPosition(new Vector3((Mx_ - mx_) * 0.5f + mx_, 0, (Mz_ - mz_) * 0.5f + mz_));
 	}
 
-	public bool IsAnyTrooperOnHex(GameObject hex)
+	public bool IsAllyTrooperOnHex(GameObject hex)
 	{
 		foreach( Trooper t in _AllyList )
 		{
 			if( _Pathfinding.GetTileBelow(t.transform.position) == hex )
 				return true;
 		}
+
+		return false;
+	}
+
+	public bool IsEnemyTrooperOnHex(GameObject hex)
+	{
 		foreach( Trooper t in _EnemyList )
 		{
 			if( _Pathfinding.GetTileBelow(t.transform.position) == hex )
 				return true;
 		}
-
+		
 		return false;
+	}
+
+	public bool IsAnyTrooperOnHex(GameObject hex)
+	{
+		return IsAllyTrooperOnHex(hex) || IsEnemyTrooperOnHex(hex);
 	}
 
 	public bool SpawnerVisibleByTroopers(GameObject spawner)
@@ -272,5 +290,16 @@ public class SquadManager : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	public Trooper GetAllyTrooperOnHex(GameObject hex)
+	{
+		foreach( Trooper t in _AllyList )
+		{
+			if( _Pathfinding.GetTileBelow(t.transform.position) == hex )
+				return t;
+		}
+		
+		return null;
 	}
 }

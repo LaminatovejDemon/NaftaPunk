@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Trooper : MonoBehaviour {
 
-	float WALKING_TOLERANCE = 0.01f;
+	public const float WALKING_TOLERANCE = 0.01f;
 
 	public float WALKING_SPEED = 1.0f;
 	public float HEALTH = 10.0f;
@@ -54,6 +54,8 @@ public class Trooper : MonoBehaviour {
 
 	private EnemyAI m_EnemyAI;
 	private HexData m_Spawner;
+
+	private bool m_CarriesGrail = false;
 	
 	float GetTargetAngle(GameObject target)
 	{
@@ -216,9 +218,13 @@ public class Trooper : MonoBehaviour {
 		if( _FractionLocal == Fraction.F_Ally )
 		{
 			HexData startPos = Level.GetInstance().GetFreeStartPos();
-			transform.position = startPos.transform.position;
-			startPos.OccupyStartPos(true);
+			if( startPos )
+			{
+				transform.position = startPos.transform.position;
+				startPos.OccupyStartPos(true);
+			}
 			_TargetPosition = transform.position;
+			m_CarriesGrail = false;
 		}
 		SquadManager.GetInstance().RegisterTrooper(this, _FractionLocal);
 		_Body.renderer.material = _FractionLocal == Fraction.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
@@ -293,6 +299,21 @@ public class Trooper : MonoBehaviour {
 		}
 		
 	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
+	}
+
+	public void CarryGrail()
+	{
+		m_CarriesGrail = true;
+	}
+
+	public void DropGrail()
+	{
+		m_CarriesGrail = true;
+	}
+
+	public bool IsCarryingGrail()
+	{
+		return m_CarriesGrail;
 	}
 
 }
