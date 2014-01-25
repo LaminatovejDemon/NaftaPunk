@@ -87,11 +87,23 @@ public class Pathfinding : MonoBehaviour
 
 		if( pathFound )
 		{
+			Vector3 lastDir = Vector3.zero;
 			GameObject tBack = target;
+
+			m_Path.Add(tBack);
 			while( tBack != startTile )
 			{
-				m_Path.Add(tBack);
-				tBack = m_SearchSpace[tBack];
+				GameObject t = m_SearchSpace[tBack];
+				Vector3 dir = (t.transform.position - tBack.transform.position).normalized;
+
+				if( lastDir == Vector3.zero )
+					lastDir = dir;
+				if( Vector3.Dot(lastDir, dir) < 0.9962 )
+				{
+					m_Path.Add(tBack);
+				}
+				lastDir = dir;
+				tBack = t;
 			}
 		}
 		m_Path.Reverse ();
