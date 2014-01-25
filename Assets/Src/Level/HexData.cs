@@ -42,6 +42,9 @@ public class HexData : MonoBehaviour
 
 	void UpdateSpawner()
 	{
+		if( SquadManager.GetInstance().SpawnerVisibleByTroopers(this.gameObject) )
+			return;
+
 		if( m_Spawner )
 		{
 			if( m_SpawnedTrooper == null )
