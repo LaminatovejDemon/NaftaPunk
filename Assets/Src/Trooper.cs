@@ -58,6 +58,8 @@ public class Trooper : MonoBehaviour {
 		return _TargetAngle == GetTargetAngle(target);
 	}
 
+	List<GameObject> _WalkList;
+
 	public void Walk(List<GameObject> path)
 	{
 		if ( path == null || path.Count == 0 )
@@ -65,13 +67,8 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 
-		GameObject waypoint = path [0];
-		waypoint.renderer.material = SquadManager.GetInstance().TrooperEnemyMaterial;
-		Vector3 targetPos_ = waypoint.transform.position;
-		targetPos_.y = transform.position.y;
-		_TargetPosition = targetPos_;
-
-		SquadManager.GetInstance().SetCenterPoint();
+		_WalkList = path;
+		_Walking = false;
 	}
 
 	void Start()
@@ -107,15 +104,38 @@ public class Trooper : MonoBehaviour {
 	}
 
 	float _NextWatchTimestamp = -1;
+	bool _Walking = false;
+
+	void PullWalkPoint()
+	{
+		if ( _WalkList != null && _WalkList.Count > 0 && !_Walking)
+		{
+			_Walking = true;
+
+			Vector3 targetPos_ = _WalkList[0].transform.position;
+			targetPos_.y = transform.position.y;
+			_TargetPosition = targetPos_;
+			_WalkList.RemoveAt(0);
+			SquadManager.GetInstance().SetCenterPoint();
+
+			if ( _WalkList.Count == 0 )
+			{
+				_WalkList = null;
+			}
+		}
+	}
 
 	void UpdatePosition()
 	{
+		PullWalkPoint();
+
+		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
+
 		if ( (transform.position - _TargetPosition).magnitude < WALKING_TOLERANCE )
 		{
-			return;
+			_Walking = false;
+			PullWalkPoint();
 		}
-	
-		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
 	}
 
 	void Watch()
