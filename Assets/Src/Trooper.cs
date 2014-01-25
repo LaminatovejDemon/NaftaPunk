@@ -80,6 +80,7 @@ public class Trooper : MonoBehaviour {
 		UpdateSetting();
 		UpdateRotation();
 		UpdatePosition();
+		Watch();
 	}
 
 	void UpdateSetting()
@@ -108,8 +109,6 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 	
-		Watch();
-
 		transform.position = Utils.Slerp(transform.position, _TargetPosition, WALKING_SPEED);
 	}
 
@@ -145,8 +144,6 @@ public class Trooper : MonoBehaviour {
 		_ActualAngle = _TargetAngle;
 		
 	  	_Body.transform.eulerAngles = new Vector3(0, _ActualAngle, 0);
-
-		Watch();
 	}
 
 }
