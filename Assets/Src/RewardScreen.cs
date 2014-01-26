@@ -8,6 +8,8 @@ public class RewardScreen : MonoBehaviour
 	public Transform _MiddleContainer;
 	public Transform _RightContainer;
 
+	public GameObject _TintScreen;
+
 	public bool _Enabled = false;
 	bool _EnabledLocal = false;
 
@@ -23,6 +25,8 @@ public class RewardScreen : MonoBehaviour
 	public void SetVisibility(bool state)
 	{
 		List<UIPortrait> portraitList_ = UIManager.GetInstance().GetPortraits();
+
+		_TintScreen.SetActive(state);
 
 		if ( state) 
 		{
