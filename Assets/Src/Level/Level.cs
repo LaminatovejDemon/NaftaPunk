@@ -28,6 +28,8 @@ public class Level : MonoBehaviour
 	private int m_TroopersKilled = 0;
 	private int m_SkillPointsPickedUp = 0;
 
+	private bool m_LevelDone = false;
+	private bool m_GameOver = false;
 	void Awake()
 	{
 		_Instance = this;
@@ -89,6 +91,7 @@ public class Level : MonoBehaviour
 		{
 			GameObject go = GameObject.Instantiate(trooperTemplate) as GameObject;
 			go.name = "Trooper" + (i+1).ToString();
+			go.transform.position = Vector3.up*100f;
 
 			string trooperName = trooperNames[i];
 			GameStateManager.TCharStats stats = GameStateManager.GetInstance().GetStats(trooperName);
@@ -146,7 +149,7 @@ public class Level : MonoBehaviour
 
 	}
 
-	void Reset()
+	public void Reset()
 	{
 		// zabiti enemaku
 		SquadManager.GetInstance ().KillAllEnemies ();
@@ -190,6 +193,8 @@ public class Level : MonoBehaviour
 			SquadManager.GetInstance ().OnKilled (m_Troopers [i], true);
 			m_Troopers[i].gameObject.SetActive(true);
 		}
+
+		m_GameOver = false;
 	}
 
 	public void InitTrooper(Trooper t)
@@ -245,13 +250,21 @@ public class Level : MonoBehaviour
 
 	public void LevelDone()
 	{
-		Debug.Log ("Level done");
+		if( m_LevelDone )
+			return;
+		m_LevelDone = true;
+
+		EnableSpawners (false);
+		SquadManager.GetInstance ().KillAllEnemies ();
 		UIManager.GetInstance()._RewardScreen._Enabled = true;
-		//UIManager.GetInstance().r
 	}
 
 	void GameOver()
 	{
-		Debug.Log ("Game over");
+		if( m_GameOver )
+			return;
+		m_GameOver = true;
+
+		UIManager.GetInstance ()._GameOverScreen.gameObject.SetActive (true);
 	}
 }
