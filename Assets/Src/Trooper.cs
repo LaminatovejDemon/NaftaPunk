@@ -17,6 +17,7 @@ public class Trooper : MonoBehaviour {
 	public GameStateManager.EFractionType _Fraction = GameStateManager.EFractionType.Gyms;
 
 	public Transform _GunfireParticle;
+	public Transform _BloodParticle;
 
 	public int _SkillSpeed = 1;
 	int _SkillSpeedLocal = -100;

@@ -43,6 +43,10 @@ public class HealthBar : MonoBehaviour
 				SquadManager.GetInstance().OnKilled(_Owner);
 			}
 		}
+		else
+		{
+			_Owner._BloodParticle.gameObject.SetActive(false);
+		}
 	}
 
 }

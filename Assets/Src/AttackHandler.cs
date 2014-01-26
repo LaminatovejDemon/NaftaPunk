@@ -62,17 +62,19 @@ public class AttackHandler : MonoBehaviour
 
 		if ( _Target != null )
 		{
-			if( _Target.GetKilled() )
+/*			if( _Target.GetKilled() )
 			{
 				SetTarget(null);
 				return;
-			}
+			}*/
 			if ( _Target._HealthBar._Health <= 0 )
 			{
+				_Target._BloodParticle.gameObject.SetActive(false);
 				SetTarget(null);
 				return;
 			}
 
+			_Target._BloodParticle.gameObject.SetActive(true);
 			_Target._HealthBar._Health -= _Attacker.ATTACK * (float)_Attacker._SkillAttack * Time.deltaTime;
 			_Target._HealthBar.UpdateHealth();
 		}
