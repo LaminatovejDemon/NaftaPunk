@@ -19,13 +19,13 @@ public class Trooper : MonoBehaviour {
 	public Transform _GunfireParticle;
 
 	public int _SkillSpeed = 1;
-	int _SkillSpeedLocal = -1;
+	int _SkillSpeedLocal = -100;
 
 	public int _SkillHealth = 1;
-	int _SkillHealthLocal = -1;
+	int _SkillHealthLocal = -100;
 
 	public int _SkillAttack = 1;
-	int _SkillAttackLocal = -1;
+	int _SkillAttackLocal = -100;
 
 	public enum Angle
 	{

@@ -86,8 +86,8 @@ public class GameStateManager : MonoBehaviour
 
 		string name_ = target._Fraction == EFractionType.Gyms ? Fraction1Names[_SpreadStatsindex] : Fraction2Names[_SpreadStatsindex];
 
-		int penalty_ = Random.Range(0,2);
-		target.SetRpgProperties(name_,  m_CharacterStats[name_].Health - penalty_, m_CharacterStats[name_].Speed - 1, m_CharacterStats[name_].Attack - (2-penalty_) ); 
+
+		target.SetRpgProperties(name_,  (int)(m_CharacterStats[name_].Health * 1.5f - 3), (int)(m_CharacterStats[name_].Speed * 1.5f - 3), (int)(m_CharacterStats[name_].Attack * 1.5f - 3) ); 
 	}
 
 	public void ResetGame()

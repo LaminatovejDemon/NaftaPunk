@@ -38,9 +38,9 @@ public class UIPortrait : MonoBehaviour
 
 	public void SetButtonVisibility(bool state)
 	{
-		_HealthSkillButton.gameObject.SetActive(state);
-		_SpeedSkillButton.gameObject.SetActive(state);
-		_AttackSkillButton.gameObject.SetActive(state);
+		_HealthSkillButton.gameObject.SetActive(state && _Owner._SkillHealth < 10);
+		_SpeedSkillButton.gameObject.SetActive(state && _Owner._SkillSpeed < 10);
+		_AttackSkillButton.gameObject.SetActive(state && _Owner._SkillAttack < 10);
 	}
 
 
