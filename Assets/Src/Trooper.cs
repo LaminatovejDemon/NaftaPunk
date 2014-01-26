@@ -404,10 +404,13 @@ public class Trooper : MonoBehaviour {
 		}
 	}
 
-	public void CarryGrail()
+	public void CarryGrail(GameObject grail)
 	{
 		m_CarriesGrail = true;
-		_Grail.renderer.enabled = true;
+
+		grail.transform.parent = _Grail.transform;
+		grail.transform.localScale = Vector3.one;
+		grail.transform.localPosition = Vector3.zero;
 	}
 
 	public void DropGrail()
@@ -416,12 +419,14 @@ public class Trooper : MonoBehaviour {
 			return;
 
 		m_CarriesGrail = false;
-		_Grail.renderer.enabled = false;
 
 		GameObject tile = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position);
 		HexData tileData = tile.GetComponent<HexData> ();
-		tileData.m_Grail = true;
-		tileData.SetTexture ();
+		GameObject grail = Level.GetInstance ().GetGrailInstance ();
+		grail.transform.parent = tile.transform;
+		grail.transform.localScale = Vector3.one;
+		grail.transform.position = tile.transform.position + Vector3.up * 0.83f;
+		tileData.SetContainsGrail (true);
 	}
 
 	public bool IsCarryingGrail()

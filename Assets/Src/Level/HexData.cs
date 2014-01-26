@@ -14,12 +14,14 @@ public class HexData : MonoBehaviour
 	private GameObject m_SpawnedTrooper = null;
 	private float m_SpawnDelay;
 	private float m_SpawnStart;
+	private bool m_ContainsGrail = false;
 
 	private bool m_StartPosOccupied = false;
 
 	void Awake()
 	{
 		m_DistanceOneTile = Utils.c_HexRadius * Mathf.Sqrt (3);
+		m_ContainsGrail = m_Grail;
 	}
 
 	void Start ()
@@ -122,7 +124,7 @@ public class HexData : MonoBehaviour
 	
 	void UpdateGrail()
 	{
-		if( !m_Grail )
+		if( !m_ContainsGrail )
 			return;
 
 		for( int i = 0; i < 6; ++i )
@@ -142,9 +144,10 @@ public class HexData : MonoBehaviour
 
 			if ( (t.transform.position - tr.transform.position).magnitude < Trooper.WALKING_TOLERANCE )
 			{
-				tr.CarryGrail();
-				m_Grail = false;
-				SetTexture();
+				GameObject grail = Level.GetInstance().GetGrailInstance();
+				grail.transform.parent = null;
+				tr.CarryGrail(grail);
+				m_ContainsGrail = false;
 				return;
 			}
 		}
@@ -181,5 +184,10 @@ public class HexData : MonoBehaviour
 	public bool StartPosOccupied()
 	{
 		return m_StartPosOccupied;
+	}
+
+	public void SetContainsGrail(bool state)
+	{
+		m_ContainsGrail = state;
 	}
 }
