@@ -67,7 +67,7 @@ public class Level : MonoBehaviour
 
 					GameObject go = GameObject.Instantiate(m_TeleportParticle) as GameObject;
 					go.transform.parent = hexData.transform;
-					go.transform.localPosition = Vector3.zero;
+					go.transform.position = hexData.transform.position;
 					go.transform.rotation = Quaternion.identity;
 				}
 
