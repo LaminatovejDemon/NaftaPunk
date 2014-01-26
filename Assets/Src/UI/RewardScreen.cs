@@ -56,6 +56,8 @@ public class RewardScreen : MonoBehaviour
 
 		if ( state) 
 		{
+			GetComponent<AudioSource>().Play();
+
 			UIManager.GetInstance()._HintBar.SetState(HintBar.State.Won);
 
 			if ( portraitList_.Count > 0 )

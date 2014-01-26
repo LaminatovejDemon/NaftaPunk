@@ -238,6 +238,7 @@ public class Level : MonoBehaviour
 
 	public void SkillPointPickedUp()
 	{
+		MusicManager.GetInstance().PlayOneShot(MusicManager.OneShots.PickupXP);
 		m_SkillPointsPickedUp++;
 	}
 
