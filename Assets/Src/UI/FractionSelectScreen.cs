@@ -27,6 +27,8 @@ public class FractionSelectScreen : MonoBehaviour
 	{
 		gameObject.SetActive(false);
 
+		GameStateManager.GetInstance().ResetGame ();
+
 		UIManager.GetInstance()._ChapterScreen.InitFraction(GameStateManager.EFractionType.Gyms);
 		UIManager.GetInstance()._ChapterScreen.gameObject.SetActive(true);
 
