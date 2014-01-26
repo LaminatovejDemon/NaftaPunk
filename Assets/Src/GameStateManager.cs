@@ -90,7 +90,7 @@ public class GameStateManager : MonoBehaviour
 		target.SetRpgProperties(name_,  (int)(m_CharacterStats[name_].Health * 1.5f - 3), (int)(m_CharacterStats[name_].Speed * 1.5f - 3), (int)(m_CharacterStats[name_].Attack * 1.5f - 3) ); 
 	}
 
-	public void ResetGame()
+	public void ResetGame(bool withLoad = false)
 	{
 		m_GameStarted = false;
 		m_CharacterStats.Clear ();
@@ -101,6 +101,9 @@ public class GameStateManager : MonoBehaviour
 		m_CharacterStats.Add(c_Squad2Trooper1Name, new TCharStats(2, 3, 3));
 		m_CharacterStats.Add(c_Squad2Trooper2Name, new TCharStats(2, 2, 2));
 		m_CharacterStats.Add(c_Squad2Trooper3Name, new TCharStats(3, 2, 3));
+
+		if( withLoad )
+			Application.LoadLevel(0);
 	}
 
 	public void SetFraction(EFractionType ft)

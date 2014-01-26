@@ -28,6 +28,8 @@ public class GameOverScreen : MonoBehaviour
 	public void Restart()
 	{
 		gameObject.SetActive(false);
-		Level.GetInstance ().Reset ();
+		GameStateManager.GetInstance ().ResetGame (true);
+		//UIManager.GetInstance ()._FractionSelectScreen.gameObject.SetActive (true);
+		//Level.GetInstance ().Reset ();
 	}
 }
