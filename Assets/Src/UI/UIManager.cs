@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
 	public Material SelectedPortrait;
 	public Material DefaultPortrait;
 
+	public RewardScreen _RewardScreen;
+
 	public static UIManager GetInstance()
 	{
 		return _Instance;
