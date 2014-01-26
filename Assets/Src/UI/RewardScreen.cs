@@ -28,7 +28,9 @@ public class RewardScreen : MonoBehaviour
 	{
 		if ( Level.GetInstance().SkillPointAmount() <= 0 )
 		{
+			GameStateManager.GetInstance().SaveAllStats();
 			_Enabled = false;
+			Application.LoadLevel((Application.loadedLevel+1) % Application.levelCount);
 		}
 	}
 
@@ -60,6 +62,8 @@ public class RewardScreen : MonoBehaviour
 				portraitList_[0].transform.localScale = Vector3.one;
 				portraitList_[0].transform.localPosition = Vector3.zero;
 				portraitList_[0].SetButtonVisibility(skillPointAmount_ > 0);
+				portraitList_[0].OnSelect(false);
+				portraitList_[0].collider.enabled = false;
 			}
 
 			if ( portraitList_.Count > 1 )
@@ -68,6 +72,8 @@ public class RewardScreen : MonoBehaviour
 				portraitList_[1].transform.localScale = Vector3.one;
 				portraitList_[1].transform.localPosition = Vector3.zero;
 				portraitList_[1].SetButtonVisibility(skillPointAmount_ > 0);
+				portraitList_[1].OnSelect(false);
+				portraitList_[1].collider.enabled = false;
 			}
 
 			if ( portraitList_.Count > 2 )
@@ -76,6 +82,8 @@ public class RewardScreen : MonoBehaviour
 				portraitList_[2].transform.localScale = Vector3.one;
 				portraitList_[2].transform.localPosition = Vector3.zero;
 				portraitList_[2].SetButtonVisibility(skillPointAmount_ > 0);
+				portraitList_[2].OnSelect(false);
+				portraitList_[2].collider.enabled = false;
 			}
 		}
 		else

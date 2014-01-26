@@ -63,6 +63,15 @@ public class GameStateManager : MonoBehaviour
 		return m_CharacterStats [charName];
 	}
 
+	public void SaveAllStats()
+	{
+		for ( int i = 0; i < SquadManager.GetInstance()._AllyList.Count; ++i )
+		{
+			Trooper ally_ = SquadManager.GetInstance()._AllyList[i];
+			SaveStats(ally_.NAME, new TCharStats(ally_._SkillHealth, ally_._SkillSpeed, ally_._SkillAttack));
+		}
+	}
+
 	public void SaveStats(string charName, TCharStats stats)
 	{
 		m_CharacterStats[charName] = stats;
