@@ -119,6 +119,9 @@ public class GameStateManager : MonoBehaviour
 			m_ActFraction = EFractionType.Geographers;
 		else
 			m_ActFraction = EFractionType.Gyms;
+
+		MusicManager.GetInstance().Play(m_ActFraction == EFractionType.Gyms ? MusicManager.Music.Gym : MusicManager.Music.Geo, true);
+
 	}
 
 	public bool WasGameStarted()

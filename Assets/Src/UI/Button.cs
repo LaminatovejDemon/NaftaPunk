@@ -16,6 +16,7 @@ public class Button : MonoBehaviour
 
 	public void OnTouchUp()
 	{
+		MusicManager.GetInstance().PlayOneShot(MusicManager.OneShots.Button);
 		renderer.material.SetColor("_TintColor", _StandardColor);
 		if ( _Target != null && _Message != null )
 		{

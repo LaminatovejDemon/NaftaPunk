@@ -30,6 +30,7 @@ public class FractionSelectScreen : MonoBehaviour
 		UIManager.GetInstance()._ChapterScreen.InitFraction(GameStateManager.EFractionType.Gyms);
 		UIManager.GetInstance()._ChapterScreen.gameObject.SetActive(true);
 
+		MusicManager.GetInstance().Play(MusicManager.Music.Gym, true);
 	}
 
 	public void SelectGeo()
@@ -39,5 +40,6 @@ public class FractionSelectScreen : MonoBehaviour
 		UIManager.GetInstance()._ChapterScreen.InitFraction(GameStateManager.EFractionType.Geographers);
 		UIManager.GetInstance()._ChapterScreen.gameObject.SetActive(true);
 
+		MusicManager.GetInstance().Play(MusicManager.Music.Geo, true);
 	}
 }
