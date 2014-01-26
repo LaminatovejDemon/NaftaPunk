@@ -68,7 +68,10 @@ public class SquadManager : MonoBehaviour
 			}
 			else
 			{
-				_SelectedTrooper.Walk(_Pathfinding.GetPath(_SelectedTrooper, direction, true));
+				List<GameObject> path = _Pathfinding.GetPath(_SelectedTrooper, direction, false);
+				if( path.Count == 0 )
+					path = _Pathfinding.GetPath(_SelectedTrooper, direction, true);
+				_SelectedTrooper.Walk(path);
 			}
 		}
 	}
@@ -282,6 +285,23 @@ public class SquadManager : MonoBehaviour
 	public bool IsAnyTrooperOnHex(GameObject hex)
 	{
 		return IsAllyTrooperOnHex(hex) || IsEnemyTrooperOnHex(hex);
+	}
+
+	public bool AllAlliesOnTeleport()
+	{
+		foreach( Trooper t in _AllyList )
+		{
+			GameObject tile = _Pathfinding.GetTileBelow(t.transform.position);
+			if( tile )
+			{
+				if ( (t.transform.position - tile.transform.position).magnitude > Trooper.WALKING_TOLERANCE )
+					return false;
+				if( !tile.GetComponent<HexData>().m_Teleport )
+					return false;
+			}
+		}
+		
+		return true;
 	}
 
 	public bool SpawnerVisibleByTroopers(GameObject spawner)
