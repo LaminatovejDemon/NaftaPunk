@@ -27,6 +27,17 @@ public class AttackHandler : MonoBehaviour
 			_Attacker._GunfireParticle.transform.localPosition = Vector3.zero;
 			_Attacker._GunfireParticle.transform.localRotation = Quaternion.identity;
 		}
+
+		if ( state )
+		{
+			GetComponent<AudioSource>().clip = MusicManager.GetInstance().GetClip(_Attacker._Fraction == GameStateManager.EFractionType.Geographers ? MusicManager.OneShots.Gunfire_Art : MusicManager.OneShots.Gunfire_Gym);
+			GetComponent<AudioSource>().loop = true;
+			GetComponent<AudioSource>().Play();
+		}
+		else
+		{
+			GetComponent<AudioSource>().Stop();
+		}
 	}
 
 	public void SetTarget(Trooper target)
