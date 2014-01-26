@@ -133,6 +133,11 @@ public class Trooper : MonoBehaviour {
 
 	public Vector3 _TargetPosition {get; private set;}
 
+	public void InvalidateFraction()
+	{
+		_FractionLocal = Fraction.F_Invalid;
+	}
+
 	public HexData GetSpawner()
 	{
 		return m_Spawner;
@@ -263,12 +268,8 @@ public class Trooper : MonoBehaviour {
 
 		if( _FractionLocal == Fraction.F_Ally )
 		{
-			HexData startPos = Level.GetInstance().GetFreeStartPos();
-			if( startPos )
-			{
-				transform.position = startPos.transform.position;
-				startPos.OccupyStartPos(true);
-			}
+			Level.GetInstance().InitTrooper(this);
+
 			_TargetPosition = transform.position;
 			m_CarriesGrail = false;
 		}
