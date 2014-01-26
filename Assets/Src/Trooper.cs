@@ -109,6 +109,8 @@ public class Trooper : MonoBehaviour {
 
 	public void SetRpgProperties(string name, int health, int speed, int attack)
 	{
+		Debug.Log ("Setting stats to trooper " + name + " H: " + health + ", S: " + speed + " A: " + attack);
+
 		NAME = name;
 		_SkillHealth = health;
 		_SkillAttack = attack;
