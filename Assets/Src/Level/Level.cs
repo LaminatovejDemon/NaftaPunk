@@ -39,11 +39,16 @@ public class Level : MonoBehaviour
 		// test na game over - restart?
 		if( m_TroopersKilled == 3 )
 		{
+			GameOver();
 		}
 
 		if( Input.GetKeyUp(KeyCode.Space) )
 		{
-			Reset ();
+			for (int i = m_Troopers.Count-1; i >= 0; --i)
+			{
+				SquadManager.GetInstance ().OnKilled (m_Troopers [i]);
+			}
+				//Reset ();
 			//SquadManager.GetInstance().KillGrailCarrier();
 		}
 	}
@@ -138,7 +143,7 @@ public class Level : MonoBehaviour
 		// obnova trooperu
 		for (int i = m_Troopers.Count-1; i >= 0; --i)
 		{
-			SquadManager.GetInstance ().OnKilled (m_Troopers [i]);
+			SquadManager.GetInstance ().OnKilled (m_Troopers [i], true);
 			m_Troopers[i].gameObject.SetActive(true);
 		}
 	}
@@ -173,6 +178,7 @@ public class Level : MonoBehaviour
 	public void AddKilledTrooper()
 	{
 		m_TroopersKilled++;
+		Debug.Log ("Trooper killed");
 	}
 
 	public void LevelDone()
@@ -182,5 +188,6 @@ public class Level : MonoBehaviour
 
 	void GameOver()
 	{
+		Debug.Log ("Game over");
 	}
 }
