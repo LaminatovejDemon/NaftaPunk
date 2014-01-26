@@ -227,7 +227,7 @@ public class Trooper : MonoBehaviour {
 
 		if ( _Side == Side.F_Ally )
 		{
-			MusicManager.GetInstance().PlayOneShot(MusicManager.OneShots.GramophonePick);
+			MusicManager.GetInstance().PlayOneShot(MusicManager.OneShots.Button);
 			SquadManager.GetInstance().TargetHighlight(path[path.Count-1].transform.position);
 		}
 
