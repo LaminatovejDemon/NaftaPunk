@@ -101,6 +101,7 @@ public class SquadManager : MonoBehaviour
 		if( target._Fraction == Trooper.Fraction.F_Ally )
 		{
 			target.DropGrail();
+			target.InvalidateFraction();
 			target.gameObject.SetActive(false);
 		}
 

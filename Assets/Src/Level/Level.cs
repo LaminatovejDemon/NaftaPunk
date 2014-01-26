@@ -12,6 +12,8 @@ public class Level : MonoBehaviour
 
 	public GameObject m_SkillPointTemplate;
 
+
+	List<Trooper> m_Troopers = new List<Trooper> ();
 	List<GameObject> m_StartPositions = new List<GameObject> ();
 	List<GameObject> m_SkillPointPositions = new List<GameObject> ();
 	GameObject m_GrailPosition;
@@ -19,6 +21,7 @@ public class Level : MonoBehaviour
 	private int m_TroopersKilled = 0;
 	private int m_SkillPointsPickedUp = 0;
 
+	private bool m_ResetDone = false;
 	void Awake()
 	{
 		_Instance = this;
@@ -71,6 +74,7 @@ public class Level : MonoBehaviour
 
 	void Reset()
 	{
+
 		// zabiti enemaku
 		SquadManager.GetInstance ().KillAllEnemies ();
 
@@ -90,6 +94,7 @@ public class Level : MonoBehaviour
 		{
 			HexData pos = m_SkillPointPositions[i].GetComponent<HexData>();
 			pos.m_SkillPoint = true;
+			pos.transform.GetChild(0).renderer.enabled = true;
 		}
 
 		// reset gralu
@@ -103,8 +108,25 @@ public class Level : MonoBehaviour
 			}
 		}
 		m_GrailPosition.GetComponent<HexData> ().m_Grail = true;
+
+		// obnova trooperu
+		for (int i = m_Troopers.Count-1; i >= 0; --i)
+		{
+			SquadManager.GetInstance ().OnKilled (m_Troopers [i]);
+			m_Troopers[i].gameObject.SetActive(true);
+		}
 	}
 
+	public void InitTrooper(Trooper t)
+	{
+		HexData startPos = GetFreeStartPos();
+		startPos.OccupyStartPos(true);
+		t.transform.position = startPos.transform.position;
+
+		if( !m_Troopers.Contains(t) )
+			m_Troopers.Add(t);
+	}
+		
 	public HexData GetFreeStartPos()
 	{
 		for( int i = 0; i < m_StartPositions.Count; ++i )
