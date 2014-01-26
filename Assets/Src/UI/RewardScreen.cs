@@ -30,6 +30,7 @@ public class RewardScreen : MonoBehaviour
 		{
 			GameStateManager.GetInstance().SaveAllStats();
 			_Enabled = false;
+			GameStateManager.GetInstance().SwitchFraction();
 			Application.LoadLevel((Application.loadedLevel+1) % Application.levelCount);
 		}
 	}
