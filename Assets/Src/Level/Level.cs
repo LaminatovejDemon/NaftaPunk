@@ -40,7 +40,10 @@ public class Level : MonoBehaviour
 		if( GameStateManager.GetInstance().WasGameStarted() )
 			Init ();
 		else
+		{
+			Time.timeScale = 0;
 			UIManager.GetInstance()._FractionSelectScreen.gameObject.SetActive(true);
+		}
 	}
 
 	void Update()
@@ -146,6 +149,7 @@ public class Level : MonoBehaviour
 				}
 			}
 		}
+		EnableSpawners (false);
 
 	}
 
@@ -204,7 +208,11 @@ public class Level : MonoBehaviour
 		t.transform.position = startPos.transform.position;
 
 		if( !m_Troopers.Contains(t) )
+		{
 			m_Troopers.Add(t);
+			if( m_Troopers.Count == 3 )
+				EnableSpawners (true);
+		}
 	}
 		
 	public HexData GetFreeStartPos()

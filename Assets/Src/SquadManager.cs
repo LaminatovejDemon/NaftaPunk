@@ -83,7 +83,7 @@ public class SquadManager : MonoBehaviour
 			}
 			else
 			{
-				enemy.Walk(_Pathfinding.GetPath(enemy, direction));
+				enemy.Walk(_Pathfinding.GetPath(enemy, direction, true));
 			}
 		}
 	}
@@ -190,7 +190,7 @@ public class SquadManager : MonoBehaviour
 		Trooper nearestTrooper = GetNearestEnemyTrooper (searcher);
 		if( nearestTrooper != null )
 		{
-			List<GameObject> pathToEnemy = _Pathfinding.GetPath(searcher, _Pathfinding.GetTileBelow(nearestTrooper.transform.position));
+			List<GameObject> pathToEnemy = _Pathfinding.GetPath(searcher, _Pathfinding.GetTileBelow(nearestTrooper.transform.position), true);
 			if( pathToEnemy.Count > 1 )
 				res = pathToEnemy[pathToEnemy.Count-2];
 			else if( pathToEnemy.Count == 1 )

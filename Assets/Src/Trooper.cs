@@ -220,7 +220,9 @@ public class Trooper : MonoBehaviour {
 	public void Stop()
 	{
 		_WalkList = new List<GameObject>();
-		_WalkList.Add(SquadManager.GetInstance()._Pathfinding.GetTileBelow(transform.position));
+		GameObject tile = SquadManager.GetInstance ()._Pathfinding.GetTileBelow (transform.position);
+		if( tile )
+			_WalkList.Add(tile);
 		_Walking = false;
 	}
 
@@ -257,21 +259,21 @@ public class Trooper : MonoBehaviour {
 	{
 		if ( _SkillAttack != _SkillAttackLocal )
 		{
-			_SkillAttackLocal = Mathf.Clamp(_SkillAttack, 0, 10);
+			_SkillAttackLocal = Mathf.Clamp(_SkillAttack, 1, 10);
 			_SkillAttack = _SkillAttackLocal;
 			UIManager.GetInstance().SetStats(this);
 		}
 
 		if ( _SkillHealth != _SkillHealthLocal )
 		{
-			_SkillHealthLocal = Mathf.Clamp(_SkillHealth, 0, 10);
+			_SkillHealthLocal = Mathf.Clamp(_SkillHealth, 1, 10);
 			_SkillHealth = _SkillHealthLocal;
 			UIManager.GetInstance().SetStats(this);
 		}
 
 		if ( _SkillSpeed != _SkillSpeedLocal )
 		{
-			_SkillSpeedLocal = Mathf.Clamp(_SkillSpeed, 0, 10);
+			_SkillSpeedLocal = Mathf.Clamp(_SkillSpeed, 1, 10);
 			_SkillSpeed = _SkillSpeedLocal;
 			UIManager.GetInstance().SetStats(this);
 		}
@@ -295,10 +297,9 @@ public class Trooper : MonoBehaviour {
 		if( _SideLocal == Side.F_Ally )
 		{
 			Level.GetInstance().InitTrooper(this);
-
-			_TargetPosition = transform.position;
 			m_CarriesGrail = false;
 		}
+		_TargetPosition = transform.position;
 		SquadManager.GetInstance().RegisterTrooper(this, _SideLocal);
 		_Body.renderer.material = _SideLocal == Side.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
 	}
