@@ -68,7 +68,10 @@ public class SquadManager : MonoBehaviour
 			}
 			else
 			{
-				_SelectedTrooper.Walk(_Pathfinding.GetPath(_SelectedTrooper, direction, true));
+				List<GameObject> path = _Pathfinding.GetPath(_SelectedTrooper, direction, false);
+				if( path.Count == 0 )
+					path = _Pathfinding.GetPath(_SelectedTrooper, direction, true);
+				_SelectedTrooper.Walk(path);
 			}
 		}
 	}
