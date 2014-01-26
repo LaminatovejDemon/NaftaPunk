@@ -195,6 +195,7 @@ public class Level : MonoBehaviour
 		for (int i = m_Troopers.Count-1; i >= 0; --i)
 		{
 			SquadManager.GetInstance ().OnKilled (m_Troopers [i], true);
+			m_Troopers[i]._HealthBar._Health = m_Troopers[i]._HealthBar._MaxHealth;
 			m_Troopers[i].gameObject.SetActive(true);
 		}
 

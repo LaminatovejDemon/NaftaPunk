@@ -7,7 +7,8 @@ public class GameStateManager : MonoBehaviour
 	public enum EFractionType
 	{
 		Gyms,
-		Geographers
+		Geographers,
+		Invalid
 	}
 
 	public const string c_Squad1Trooper1Name = "Kamil Lhotak";
