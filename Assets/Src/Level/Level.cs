@@ -20,6 +20,7 @@ public class Level : MonoBehaviour
 	List<Trooper> m_Troopers = new List<Trooper> ();
 	List<GameObject> m_StartPositions = new List<GameObject> ();
 	List<GameObject> m_SkillPointPositions = new List<GameObject> ();
+	List<GameObject> m_SpawnPositions = new List<GameObject> ();
 	GameObject m_GrailPosition;
 
 	private GameObject m_GrailInstance;
@@ -83,6 +84,7 @@ public class Level : MonoBehaviour
 		{
 			GameObject go = GameObject.Instantiate(trooperTemplate) as GameObject;
 			go.name = "Trooper" + (i+1).ToString();
+			Trooper t = go.GetComponent<Trooper>();
 		}
 
 		// inicializace hexu
@@ -113,6 +115,7 @@ public class Level : MonoBehaviour
 					go.transform.parent = hexData.transform;
 				}
 
+				// grail
 				if( hexData.m_Grail )
 				{
 					m_GrailPosition = hexData.gameObject;
@@ -122,6 +125,12 @@ public class Level : MonoBehaviour
 
 					m_GrailInstance.transform.position = m_GrailPosition.transform.position + Vector3.up*0.5f;
 					m_GrailInstance.transform.rotation = Camera.main.transform.rotation;
+				}
+
+				// spawn positions
+				if( hexData.m_Spawner )
+				{
+					m_SpawnPositions.Add(hexData.gameObject);
 				}
 			}
 		}
@@ -194,6 +203,14 @@ public class Level : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	public void EnableSpawners(bool state)
+	{
+		for( int i = 0; i < m_SpawnPositions.Count; ++i )
+		{
+			m_SpawnPositions[i].GetComponent<HexData>().m_Spawner = state;
+		}
 	}
 
 	public void SkillPointPickedUp()
