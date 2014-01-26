@@ -6,21 +6,25 @@ public class Atlas : MonoBehaviour
 {
 	public List<Texture>[] _GymList;
 	public List<Texture>[] _GymLegList;
+	public List<Texture>[] _Gramophone;
+
+	void CreateAtlas(ref List<Texture>[] list, int dimension)
+	{
+		list = new List<Texture>[6];
+
+		for ( int i = 0; i < list.Length; ++i )
+		{
+			list[i] = new List<Texture>();
+		}
+	}
 
 	void Start()
 	{
-		_GymList = new List<Texture>[6];
-		_GymLegList = new List<Texture>[6];
+		CreateAtlas(ref _GymList, 6);
+		CreateAtlas(ref _GymLegList, 6);
 
-		for ( int i = 0; i < _GymList.Length; ++i )
-		{
-			_GymList[i] = new List<Texture>();
-		}
 
-		for ( int i = 0; i < _GymLegList.Length; ++i )
-		{
-			_GymLegList[i] = new List<Texture>();
-		}
+
 
 		FillList(_GymList[0], 0);
 		FillList(_GymList[1], 60);
@@ -37,6 +41,37 @@ public class Atlas : MonoBehaviour
 		FillLegList(_GymLegList[5], 300);
 	}
 
+	void FillGramophone(List<Texture> target)
+	{
+		Texture tex_ = null;
+		int frame_ = 1;
+		while ( true )
+		{
+			string name_ = string.Format("Gymmasters/gramophoneanimated/gramophone{0:D2}", frame_);
+
+			tex_ = (Texture)Resources.Load(name_);
+			
+			if ( tex_ == null )
+			{
+				break;
+			}
+			
+			target.Add(tex_);
+			++frame_;
+		}
+	}
+
+	public List<Texture> GetGrailTexture()
+	{
+		if ( _Gramophone == null )
+		{
+			CreateAtlas(ref _Gramophone, 1);
+			FillGramophone(_Gramophone[0]);
+		}
+
+		return _Gramophone[0];
+	}
+	
 	public List<Texture> GetLegsTexture(int angle)
 	{
 		if ( angle > 270 )
