@@ -88,10 +88,12 @@ public class ControllerManager : MonoBehaviour
 	public void OnTouchDown(Vector2 position)
 	{
 		GameObject touchObjct_ = GetUICollider(position);
+		Debug.Log ("We touched object" + touchObjct_);
 		if ( touchObjct_ != null && touchObjct_.GetComponent<Button>() != null )
 		{
 			_TouchDown = touchObjct_.GetComponent<Button>();
 			_TouchDown.OnTouchDown();
+
 			return;
 		}
 

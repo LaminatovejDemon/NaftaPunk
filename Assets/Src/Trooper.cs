@@ -38,17 +38,32 @@ public class Trooper : MonoBehaviour {
 
 	public void SkillUpAttack()
 	{
-		++_SkillAttack;
+		if ( Level.GetInstance().SkillPointAmount() > 0 )
+		{
+			Level.GetInstance().DecreaseSkillPoints();
+			++_SkillAttack;
+			UIManager.GetInstance()._RewardScreen.UpdateLevelUpStatus();
+		}
 	}
 
 	public void SkillUpSpeed()
 	{
-		++_SkillHealth;
+		if ( Level.GetInstance().SkillPointAmount() > 0 )
+		{
+			Level.GetInstance().DecreaseSkillPoints();
+			++_SkillSpeed;
+			UIManager.GetInstance()._RewardScreen.UpdateLevelUpStatus();
+		}
 	}
 
 	public void SkillUpHealth()
 	{
-		++_SkillSpeed;
+		if ( Level.GetInstance().SkillPointAmount() > 0 )
+		{
+			Level.GetInstance().DecreaseSkillPoints();
+			++_SkillHealth;
+			UIManager.GetInstance()._RewardScreen.UpdateLevelUpStatus();
+		}
 	}
 
 	public Renderer _BodySkinRenderer;
