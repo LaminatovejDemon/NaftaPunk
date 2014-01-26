@@ -10,6 +10,9 @@ public class Level : MonoBehaviour
 		return _Instance;
 	}
 
+	public GameObject m_GymTroopTemplate;
+	public GameObject m_GeographerTroopTemplate;
+
 	public GameObject m_SkillPointTemplate;
 	public GameObject m_GrailTemplate;
 	public GameObject m_TeleportParticle;
@@ -60,6 +63,29 @@ public class Level : MonoBehaviour
 	
 	void Init()
 	{
+		// instancovani postav
+		GameObject trooperTemplate = null;
+
+		GameStateManager.EFractionType fraction = GameStateManager.GetInstance ().GetFraction ();
+		switch( fraction )
+		{
+		case GameStateManager.EFractionType.Gyms:
+			trooperTemplate = m_GymTroopTemplate;
+			SquadManager.GetInstance().EnemyTemplate = m_GeographerTroopTemplate;
+			break;
+		case GameStateManager.EFractionType.Geographers:
+			trooperTemplate = m_GeographerTroopTemplate;
+			SquadManager.GetInstance().EnemyTemplate = m_GymTroopTemplate;
+			break;
+		}
+
+		for( int i = 0; i < 3; ++i )
+		{
+			GameObject go = GameObject.Instantiate(trooperTemplate) as GameObject;
+			go.name = "Trooper" + (i+1).ToString();
+		}
+
+		// inicializace hexu
 		for( int i = 0; i < transform.childCount; ++i )
 		{
 			HexData hexData = transform.GetChild(i).GetComponent<HexData>();
