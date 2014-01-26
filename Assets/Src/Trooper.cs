@@ -329,7 +329,7 @@ public class Trooper : MonoBehaviour {
 			targetPos_.y = transform.position.y;
 			_TargetPosition = targetPos_;
 			_WalkList.RemoveAt(0);
-			SquadManager.GetInstance().SetCenterPoint();
+
 
 			if ( _WalkList.Count == 0 )
 			{
