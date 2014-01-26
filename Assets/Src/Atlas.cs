@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class Atlas : MonoBehaviour 
 {
 	public List<Texture>[] _GymList;
+	public List<Texture>[] _GeoList;
+
 	public List<Texture>[] _GymLegList;
 	public List<Texture>[] _Gramophone;
 
@@ -21,17 +23,25 @@ public class Atlas : MonoBehaviour
 	void Start()
 	{
 		CreateAtlas(ref _GymList, 6);
+		CreateAtlas(ref _GeoList, 6);
 		CreateAtlas(ref _GymLegList, 6);
 
 
 
 
-		FillList(_GymList[0], 0);
-		FillList(_GymList[1], 60);
-		FillList(_GymList[2], 120);
-		FillList(_GymList[3], 180);
-		FillList(_GymList[4], 240);
-		FillList(_GymList[5], 300);
+		FillList(_GymList[0], 0, "Gymmasters/gymmaster_Left_");
+		FillList(_GymList[1], 60, "Gymmasters/gymmaster_Left_");
+		FillList(_GymList[2], 120, "Gymmasters/gymmaster_Left_");
+		FillList(_GymList[3], 180, "Gymmasters/gymmaster_Left_");
+		FillList(_GymList[4], 240, "Gymmasters/gymmaster_Left_");
+		FillList(_GymList[5], 300, "Gymmasters/gymmaster_Left_");
+
+		FillList(_GeoList[0], 0, "AntiGyms/antigymmaster_");
+		FillList(_GeoList[1], 60, "AntiGyms/antigymmaster_");
+		FillList(_GeoList[2], 120, "AntiGyms/antigymmaster_");
+		FillList(_GeoList[3], 180, "AntiGyms/antigymmaster_");
+		FillList(_GeoList[4], 240, "AntiGyms/antigymmaster_");
+		FillList(_GeoList[5], 300, "AntiGyms/antigymmaster_");
 
 		FillLegList(_GymLegList[0], 0);
 		FillLegList(_GymLegList[1], 60);
@@ -88,29 +98,31 @@ public class Atlas : MonoBehaviour
 			return _GymLegList[4];
 	}
 
-	public List<Texture> GetTexture(int angle)
+	public List<Texture> GetTexture(int angle, GameStateManager.EFractionType type)
 	{
+		List<Texture> [] targetList_ = (type == GameStateManager.EFractionType.Gyms ? _GymList : _GeoList);
+
 		if ( angle > 270 )
-			return _GymList[5];
+			return targetList_[5];
 		else if ( angle > 210 )
-			return _GymList[0];
+			return targetList_[0];
 		else if ( angle > 150 )
-			return _GymList[1];
+			return targetList_[1];
 		else if ( angle > 90 )
-			return _GymList[2];
+			return targetList_[2];
 		else if ( angle > 30 )
-			return _GymList[3];
+			return targetList_[3];
 		else
-			return _GymList[4];
+			return targetList_[4];
 	}
 
-	void FillList(List<Texture> target, int angle)
+	void FillList(List<Texture> target, int angle, string pathBegin)
 	{
 		Texture tex_ = null;
 		int frame_ = 1;
 		while ( true )
 		{
-			string name_ = "Gymmasters/gymmaster_Left_Angle" + angle + "_frame" + frame_;
+			string name_ = pathBegin + "Angle" + angle + "_frame" + frame_;
 	
 			tex_ = (Texture)Resources.Load(name_);
 
