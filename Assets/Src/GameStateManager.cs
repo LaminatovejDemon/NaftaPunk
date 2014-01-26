@@ -132,6 +132,7 @@ public class GameStateManager : MonoBehaviour
 		m_GameStarted = true;
 
 		Level.GetInstance().Init ();
+		Time.timeScale = 1;
 	}
 
 }
