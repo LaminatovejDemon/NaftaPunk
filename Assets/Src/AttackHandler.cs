@@ -33,6 +33,11 @@ public class AttackHandler : MonoBehaviour
 			GetComponent<AudioSource>().clip = MusicManager.GetInstance().GetClip(_Attacker._Fraction == GameStateManager.EFractionType.Geographers ? MusicManager.OneShots.Gunfire_Art : MusicManager.OneShots.Gunfire_Gym);
 			GetComponent<AudioSource>().loop = true;
 			GetComponent<AudioSource>().Play();
+
+			if ( Random.value < 0.2f )
+			{
+				MusicManager.GetInstance().PlayOneShot(_Attacker._Fraction == GameStateManager.EFractionType.Geographers ? MusicManager.OneShots.Berserk_Art : MusicManager.OneShots.Berserk_Gym);
+			}
 		}
 		else
 		{

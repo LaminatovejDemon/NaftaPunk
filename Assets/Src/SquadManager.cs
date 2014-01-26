@@ -98,6 +98,8 @@ public class SquadManager : MonoBehaviour
 			target.GetSpawner().ResetSpawner();
 		}
 
+		MusicManager.GetInstance().PlayOneShot(target._Fraction == GameStateManager.EFractionType.Geographers ? MusicManager.OneShots.Death_Art : MusicManager.OneShots.Death_Gym);
+
 		_AllyList.Remove(target);
 		_EnemyList.Remove(target);
 

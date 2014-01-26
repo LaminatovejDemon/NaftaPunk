@@ -85,6 +85,27 @@ public class MusicManager : MonoBehaviour {
 		case OneShots.GramophonePick:
 			source_.PlayOneShot(_GramophonePick);
 			break;
+		case OneShots.Button:
+			source_.PlayOneShot(_Button);
+			break;
+		case OneShots.Button2:
+			source_.PlayOneShot(_Button2);
+			break;
+		case OneShots.PickupXP:
+			source_.PlayOneShot(_PickupXP);
+			break;
+		case OneShots.Berserk_Art:
+			source_.PlayOneShot(_BerserkArt[Random.Range(0, _BerserkArt.Count)]);
+			break;
+		case OneShots.Berserk_Gym:
+			source_.PlayOneShot(_BerserkGym[Random.Range(0, _BerserkGym.Count)]);
+			break;
+		case OneShots.Death_Art:
+			source_.PlayOneShot(_DeathArt[Random.Range(0, _DeathArt.Count)]);
+			break;
+		case OneShots.Death_Gym:
+			source_.PlayOneShot(_DeathGym[Random.Range(0, _DeathGym.Count)]);
+			break;
 		}
 	}
 
