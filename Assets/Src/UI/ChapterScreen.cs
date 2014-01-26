@@ -57,5 +57,7 @@ public class ChapterScreen : MonoBehaviour
 			_Fraction = GameStateManager.EFractionType.Invalid;
 		}
 
+		UIManager.GetInstance()._HintBar.gameObject.SetActive(true);
+
 	}
 }
