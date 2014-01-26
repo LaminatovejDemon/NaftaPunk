@@ -4,12 +4,20 @@ using System.Collections.Generic;
 
 public class GameStateManager : MonoBehaviour 
 {
+	public enum EFractionType
+	{
+		Gyms,
+		Geographers
+	}
+
 	public const string c_Squad1Trooper1Name = "Name11";
 	public const string c_Squad1Trooper2Name = "Name12";
 	public const string c_Squad1Trooper3Name = "Name13";
 	public const string c_Squad2Trooper1Name = "Name21";
 	public const string c_Squad2Trooper2Name = "Name22";
 	public const string c_Squad2Trooper3Name = "Name23";
+
+	private EFractionType m_ActFraction = EFractionType.Gyms;
 	
 	public struct TCharStats
 	{
@@ -66,6 +74,24 @@ public class GameStateManager : MonoBehaviour
 		m_CharacterStats.Add(c_Squad2Trooper1Name, new TCharStats(1, 1, 1));
 		m_CharacterStats.Add(c_Squad2Trooper2Name, new TCharStats(1, 1, 1));
 		m_CharacterStats.Add(c_Squad2Trooper3Name, new TCharStats(1, 1, 1));
+	}
+
+	public void SetFraction(EFractionType ft)
+	{
+		m_ActFraction = ft;
+	}
+
+	public EFractionType GetFraction()
+	{
+		return m_ActFraction;
+	}
+
+	public void SwitchFraction()
+	{
+		if( m_ActFraction == EFractionType.Gyms )
+			m_ActFraction = EFractionType.Geographers;
+		else
+			m_ActFraction = EFractionType.Gyms;
 	}
 
 
