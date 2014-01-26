@@ -118,7 +118,7 @@ public class HexData : MonoBehaviour
 		if ( (transform.position - tr.transform.position).magnitude > Trooper.WALKING_TOLERANCE )
 			return;
 
-		if( tr.IsCarryingGrail() )
+		if( tr.IsCarryingGrail() && SquadManager.GetInstance().AllAlliesOnTeleport() )
 		{
 			Level.GetInstance().LevelDone();
 			m_Teleport = false;

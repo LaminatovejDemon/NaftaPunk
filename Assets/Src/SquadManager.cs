@@ -287,6 +287,23 @@ public class SquadManager : MonoBehaviour
 		return IsAllyTrooperOnHex(hex) || IsEnemyTrooperOnHex(hex);
 	}
 
+	public bool AllAlliesOnTeleport()
+	{
+		foreach( Trooper t in _AllyList )
+		{
+			GameObject tile = _Pathfinding.GetTileBelow(t.transform.position);
+			if( tile )
+			{
+				if ( (t.transform.position - tile.transform.position).magnitude > Trooper.WALKING_TOLERANCE )
+					return false;
+				if( !tile.GetComponent<HexData>().m_Teleport )
+					return false;
+			}
+		}
+		
+		return true;
+	}
+
 	public bool SpawnerVisibleByTroopers(GameObject spawner)
 	{
 		foreach( Trooper t in _AllyList )
