@@ -73,11 +73,6 @@ public class AttackHandler : MonoBehaviour
 
 		if ( _Target != null )
 		{
-/*			if( _Target.GetKilled() )
-			{
-				SetTarget(null);
-				return;
-			}*/
 			if ( _Target._HealthBar._Health <= 0 )
 			{
 				_Target._BloodParticle.gameObject.SetActive(false);
