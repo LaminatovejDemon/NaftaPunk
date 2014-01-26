@@ -11,8 +11,8 @@ public class ChapterScreen : MonoBehaviour
 
 	List <string> _FailTexts = new List<string>();
 	string[] _ChapterNumbers = {"XII", "XVII", "CXVI", "XIII", "VI", "III", "IX", "IV", "DIV", "MMVI", "XXV"};
-	string _GeoDescription = "You are very rachetic.\n And also art historian.\n But now, you need to save\nthe UNIVERSE.\nAt least it's History!.\n\nGo and get Phonograil!\n";
-	string _GymDescription = "Those skinny idiots\n don't even know\n how important\ndevice phono...\n phon'o'thing is!\n ...They said.\n\nGET IT!\n";
+	string _GeoDescription = "Because of disbelief\n in committee UTOPEA correctness,\n art historic council decided\n to send their own mission team\n to gather the Relic.";
+	string _GymDescription = "Conclusion of 54th committee\n UTOPEA decided that Holy\n phono grail is not determined\n for deposition in museum archives. ";
 
 	public void OnEnable()
 	{
@@ -31,7 +31,7 @@ public class ChapterScreen : MonoBehaviour
 		{
 			_TitleText.text = _TitleShadow.text = _TitleShadow2.text = _ChapterNumbers[Random.Range(0, _ChapterNumbers.Length)] + ". ACT"; 
 
-			_DescriptionText.text = "bla bla, vsichni spolu valci\nbla bla, vsichni spolu valci bla\nbla bla, vsichni spolu valci valci\nbla bla, vsichni spolu.";
+			_DescriptionText.text = "Holy Phonegrail was kept only\n for a limited amount of time.\n The Truth is not revealed.\n Because Holy Phonograil was stolen\n it's time to get this Relic\n back again!";
 		}
 
 		OnEnable();
