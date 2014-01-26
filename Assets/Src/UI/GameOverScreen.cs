@@ -20,7 +20,7 @@ public class GameOverScreen : MonoBehaviour
 		_FailTexts.Add(t3_);
 		_FailTexts.Add(t4_);
 
-		_DescriptionText.text = _FailTexts[Random.Range(3, 3)];//_FailTexts.Count)];
+		_DescriptionText.text = _FailTexts[Random.Range(0, _FailTexts.Count)];
 	}
 
 	public void Restart()

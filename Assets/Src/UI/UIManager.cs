@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 	public RewardScreen _RewardScreen;
 	public GameOverScreen _GameOverScreen;
 	public FractionSelectScreen _FractionSelectScreen;
+	public ChapterScreen _ChapterScreen;
 
 	public static UIManager GetInstance()
 	{
