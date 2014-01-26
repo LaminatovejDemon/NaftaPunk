@@ -49,8 +49,16 @@ public class HexData : MonoBehaviour
 		Utils.SetUV(renderer.material, m_HexType);
 	}
 
-	void Update () 
+	float _LastTimeStamp = -1;
+
+	void LateUpdate () 
 	{
+		if ( Time.time - _LastTimeStamp < 0.2f )
+		{
+			return;
+		}
+		_LastTimeStamp = Time.time;
+
 		UpdateSpawner ();
 		UpdateTeleport ();
 		UpdateGrail ();
