@@ -16,10 +16,13 @@ public class ChapterScreen : MonoBehaviour
 
 	public void OnEnable()
 	{
+		Time.timeScale = 0.0001f;
 		_TitleShadow.animation["TitleShadow"].speed = 1.0f/Time.timeScale;
 		_TitleShadow.animation.Play();
 		_TitleShadow2.animation["TitleShadow2"].speed = 1.0f/Time.timeScale;
 		_TitleShadow2.animation.Play();
+
+		//UIManager.GetInstance().SetStatsVisibility(false);
 	}
 
 	public void Start()
@@ -50,5 +53,6 @@ public class ChapterScreen : MonoBehaviour
 			GameStateManager.GetInstance ().StartGame (_Fraction);
 			_Fraction = GameStateManager.EFractionType.Invalid;
 		}
+
 	}
 }

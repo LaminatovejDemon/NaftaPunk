@@ -57,7 +57,6 @@ public class UIManager : MonoBehaviour
 				+ Vector3.right * camera.orthographicSize * 0.02f
 					+ Vector3.down * (camera.orthographicSize * 0.02f * (i+1)
 					                  + (i) * _RegisteredTrooperPortraits[i].collider.bounds.extents.y * 2.0f);
-
 		}
 	}
 
@@ -75,7 +74,7 @@ public class UIManager : MonoBehaviour
 
 		UIPortrait newPortrait_ = portrait_.GetComponent<UIPortrait>();
 
-		newPortrait_.SetStats(target);
+		newPortrait_.SetStats(target, _RegisteredTrooperList.Count);
 
 		_RegisteredTrooperPortraits.Add(newPortrait_);
 		_RegisteredTrooperList.Add(target);

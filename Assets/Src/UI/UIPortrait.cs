@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UIPortrait : MonoBehaviour 
 {
@@ -14,10 +15,14 @@ public class UIPortrait : MonoBehaviour
 	public Renderer _HealthBackground;
 	public Renderer _SpeedBackground;
 	public Renderer _NameBackground;
+	public Renderer _PortraitRenderer;
 
 	public Button _HealthSkillButton;
 	public Button _AttackSkillButton;
 	public Button _SpeedSkillButton;
+
+	public List<Texture> _GeoPortraits;
+	public List<Texture> _GymPortraits;
 
 	int _AttackLocal;
 	public int _Attack
@@ -67,7 +72,7 @@ public class UIPortrait : MonoBehaviour
 	{
 		Material target_ = state ? UIManager.GetInstance().SelectedPortrait : UIManager.GetInstance().DefaultPortrait;
 
-		Color nameColor_ = state ? UIManager.GetInstance().DefaultPortrait.GetColor("_TintColor") : UIManager.GetInstance().SelectedPortrait.GetColor("_TintColor");
+		Color nameColor_ = state ? UIManager.GetInstance().SelectedPortrait.GetColor("_TintColor") : Color.white;
 		nameColor_.a = 1.0f;
 		_Name.color = nameColor_;
 
@@ -92,7 +97,7 @@ public class UIPortrait : MonoBehaviour
 		}
 	}
 	
-	public void SetStats(Trooper owner)
+	public void SetStats(Trooper owner, int index = -1)
 	{
 		_Owner = owner;
 		_AttackSkillButton._Target = owner.gameObject;
@@ -106,6 +111,16 @@ public class UIPortrait : MonoBehaviour
 		_Health = _Owner._SkillHealth;
 		_Speed = _Owner._SkillSpeed;
 		_Attack = _Owner._SkillAttack;
+
+		if ( index != -1 )
+		{
+			_PortraitRenderer.material.mainTexture = 
+				owner._Fraction == GameStateManager.EFractionType.Geographers ? _GeoPortraits[index % _GeoPortraits.Count] : _GymPortraits[index % _GymPortraits.Count]; 
+		}
+
+		_PortraitRenderer.GetComponent<Button>()._Target = owner.gameObject;
+		_PortraitRenderer.GetComponent<Button>()._Message = "Select";
+
 	}
 
 }
