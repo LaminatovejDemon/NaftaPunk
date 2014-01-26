@@ -17,6 +17,10 @@ public class GameStateManager : MonoBehaviour
 	public const string c_Squad2Trooper2Name = "Name22";
 	public const string c_Squad2Trooper3Name = "Name23";
 
+	public static string[] Fraction1Names = {c_Squad1Trooper1Name, c_Squad1Trooper2Name, c_Squad1Trooper3Name};
+	public static string[] Fraction2Names = {c_Squad2Trooper1Name, c_Squad2Trooper2Name, c_Squad2Trooper3Name};
+
+	private bool m_GameStarted = false;
 	private EFractionType m_ActFraction = EFractionType.Gyms;
 	
 	public struct TCharStats
@@ -51,7 +55,7 @@ public class GameStateManager : MonoBehaviour
 		DontDestroyOnLoad(this);
 		_Instance = this;
 
-		ResetStats ();
+		ResetGame ();
 	}
 
 	public TCharStats GetStats(string charName)
@@ -64,8 +68,9 @@ public class GameStateManager : MonoBehaviour
 		m_CharacterStats[charName] = stats;
 	}
 
-	public void ResetStats()
+	public void ResetGame()
 	{
+		m_GameStarted = false;
 		m_CharacterStats.Clear ();
 
 		m_CharacterStats.Add(c_Squad1Trooper1Name, new TCharStats(1, 1, 1));
@@ -94,5 +99,9 @@ public class GameStateManager : MonoBehaviour
 			m_ActFraction = EFractionType.Gyms;
 	}
 
+	public bool WasGameStarted()
+	{
+		return m_GameStarted;
+	}
 
 }
