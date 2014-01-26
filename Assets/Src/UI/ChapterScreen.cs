@@ -16,17 +16,23 @@ public class ChapterScreen : MonoBehaviour
 
 	public void OnEnable()
 	{
+		Time.timeScale = 0.0001f;
 		_TitleShadow.animation["TitleShadow"].speed = 1.0f/Time.timeScale;
 		_TitleShadow.animation.Play();
 		_TitleShadow2.animation["TitleShadow2"].speed = 1.0f/Time.timeScale;
 		_TitleShadow2.animation.Play();
+
+		//UIManager.GetInstance().SetStatsVisibility(false);
 	}
 
 	public void Start()
 	{
-		_TitleText.text = _TitleShadow.text = _TitleShadow2.text = _ChapterNumbers[Random.Range(0, _ChapterNumbers.Length)] + ". ACT"; 
+		if ( _Fraction == GameStateManager.EFractionType.Invalid )
+		{
+			_TitleText.text = _TitleShadow.text = _TitleShadow2.text = _ChapterNumbers[Random.Range(0, _ChapterNumbers.Length)] + ". ACT"; 
 
-		_DescriptionText.text = "bla bla, vsichni spolu valci\nbla bla, vsichni spolu valci bla\nbla bla, vsichni spolu valci valci\nbla bla, vsichni spolu.";
+			_DescriptionText.text = "bla bla, vsichni spolu valci\nbla bla, vsichni spolu valci bla\nbla bla, vsichni spolu valci valci\nbla bla, vsichni spolu.";
+		}
 
 		OnEnable();
 	}
@@ -50,5 +56,6 @@ public class ChapterScreen : MonoBehaviour
 			GameStateManager.GetInstance ().StartGame (_Fraction);
 			_Fraction = GameStateManager.EFractionType.Invalid;
 		}
+
 	}
 }

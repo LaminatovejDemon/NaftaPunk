@@ -8,10 +8,21 @@ public class Grail : MonoBehaviour
 	public float _AnimationTime = 0.1f;
 	float _LastAnimationSwitch = -1;
 	int index_ = 0;
+
+	public bool _XP = false; // Too tired to do better, used for grail and xp
 	
 	void Start () 
 	{
-		_List = SquadManager.GetInstance().GetComponent<Atlas>().GetGrailTexture();
+		if ( !_XP )
+		{
+			_List = SquadManager.GetInstance().GetComponent<Atlas>().GetGrailTexture();
+		}
+		else
+		{
+			_List = SquadManager.GetInstance().GetComponent<Atlas>().GetXPTexture();
+		}
+
+		transform.rotation = Camera.main.transform.rotation;
 	}
 	
 	void Update () 

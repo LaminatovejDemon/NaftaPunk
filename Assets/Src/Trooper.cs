@@ -12,7 +12,7 @@ public class Trooper : MonoBehaviour {
 	public float ATTACK = 1.0f;
 
 	public float WATCH_DELTA_TIME = 0.5f;
-	public float SHOOT_ANGLE_DOT = 0.8f;
+	public float SHOOT_ANGLE_DOT = -0.5f;
 	public string NAME = "Abdul";
 	public GameStateManager.EFractionType _Fraction = GameStateManager.EFractionType.Gyms;
 
@@ -84,6 +84,11 @@ public class Trooper : MonoBehaviour {
 	public GameObject _Grail;
 
 	public bool _Selected = false;
+
+	public void Select()
+	{
+		SquadManager.GetInstance().SelectTrooper(this);
+	}
 
 	public void OnSelect(bool state)
 	{

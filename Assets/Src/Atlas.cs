@@ -9,6 +9,7 @@ public class Atlas : MonoBehaviour
 
 	public List<Texture>[] _GymLegList;
 	public List<Texture>[] _Gramophone;
+	public List<Texture>[] _XPAnimated;
 
 	void CreateAtlas(ref List<Texture>[] list, int dimension)
 	{
@@ -51,13 +52,16 @@ public class Atlas : MonoBehaviour
 		FillLegList(_GymLegList[5], 300);
 	}
 
-	void FillGramophone(List<Texture> target)
+	void FillGramophone(List<Texture> target, string path)
 	{
 		Texture tex_ = null;
 		int frame_ = 1;
 		while ( true )
 		{
-			string name_ = string.Format("Gymmasters/gramophoneanimated/gramophone{0:D2}", frame_);
+			string name_ = string.Format("{0}{1:D2}",path,frame_);
+
+			Debug.Log (name_);
+
 
 			tex_ = (Texture)Resources.Load(name_);
 			
@@ -71,12 +75,23 @@ public class Atlas : MonoBehaviour
 		}
 	}
 
+	public List<Texture> GetXPTexture()
+	{
+		if ( _XPAnimated == null )
+		{
+			CreateAtlas(ref _XPAnimated, 1);
+			FillGramophone(_XPAnimated[0], "xpanimated/xpanimated");
+		}
+		
+		return _XPAnimated[0];
+	}
+
 	public List<Texture> GetGrailTexture()
 	{
 		if ( _Gramophone == null )
 		{
 			CreateAtlas(ref _Gramophone, 1);
-			FillGramophone(_Gramophone[0]);
+			FillGramophone(_Gramophone[0], "Gymmasters/gramophoneanimated/gramophone");
 		}
 
 		return _Gramophone[0];
