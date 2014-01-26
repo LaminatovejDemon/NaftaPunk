@@ -129,7 +129,7 @@ public class SquadManager : MonoBehaviour
 		if ( !targetList_.Contains(target) )
 		{
 			targetList_.Add(target);
-			SetCenterPoint();
+
 		}
 
 		UIManager.GetInstance().RegisterTrooper(target, side == Trooper.Side.F_Ally);
@@ -243,14 +243,14 @@ public class SquadManager : MonoBehaviour
 		}
 		float mx_, mz_, Mx_, Mz_;
 
-		mx_ = Mx_= _AllyList[0]._TargetPosition.x;
-		mz_ = Mz_= _AllyList[0]._TargetPosition.z;
+		mx_ = Mx_= _AllyList[0].transform.position.x;
+		mz_ = Mz_= _AllyList[0].transform.position.z;
 
 		Vector3 tempPos_;
 
 		for ( int i = 0; i < _AllyList.Count; ++i )
 		{
-			tempPos_ = _AllyList[i]._TargetPosition;
+			tempPos_ = _AllyList[i].transform.position;
 			if ( tempPos_.x < mx_ ) mx_ = tempPos_.x;
 			if ( tempPos_.x > Mx_ ) Mx_ = tempPos_.x;
 			if ( tempPos_.z < mz_ ) mz_ = tempPos_.z;
@@ -342,6 +342,11 @@ public class SquadManager : MonoBehaviour
 		{
 			t.DropGrail();
 		}
+	}
+
+	public void LateUpdate()
+	{
+		SquadManager.GetInstance().SetCenterPoint();
 	}
 
 	// pouze na test
