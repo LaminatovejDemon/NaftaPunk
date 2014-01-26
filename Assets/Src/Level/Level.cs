@@ -72,8 +72,8 @@ public class Level : MonoBehaviour
 
 					GameObject go = GameObject.Instantiate(m_TeleportParticle) as GameObject;
 					go.transform.parent = hexData.transform;
-					go.transform.position = hexData.transform.position;
-					go.transform.rotation = Quaternion.identity;
+					go.transform.localPosition = Vector3.down * 0.21f;
+					go.transform.localRotation = Quaternion.AngleAxis(-90, Vector3.left);
 				}
 
 				// skillpoint positions
