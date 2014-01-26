@@ -26,5 +26,6 @@ public class GameOverScreen : MonoBehaviour
 	public void Restart()
 	{
 		gameObject.SetActive(false);
+		Level.GetInstance ().Reset ();
 	}
 }
