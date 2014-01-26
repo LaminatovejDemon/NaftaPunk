@@ -98,10 +98,10 @@ public class SquadManager : MonoBehaviour
 		_AllyList.Remove(target);
 		_EnemyList.Remove(target);
 
-		if( target._Fraction == Trooper.Fraction.F_Ally )
+		if( target._Side == Trooper.Side.F_Ally )
 		{
 			target.DropGrail();
-			target.InvalidateFraction();
+			target.InvalidateSide();
 			target.gameObject.SetActive(false);
 			if( !reset )
 				Level.GetInstance().AddKilledTrooper();
@@ -109,14 +109,14 @@ public class SquadManager : MonoBehaviour
 
 		UIManager.GetInstance().RegisterTrooper(target, false);
 
-		if( target._Fraction == Trooper.Fraction.F_Enemy )
+		if( target._Side == Trooper.Side.F_Enemy )
 			GameObject.Destroy(target.gameObject);
 	}
 
-	public void RegisterTrooper(Trooper target, Trooper.Fraction fraction)
+	public void RegisterTrooper(Trooper target, Trooper.Side side)
 	{
-		List<Trooper> targetList_ = fraction == Trooper.Fraction.F_Enemy ? _EnemyList : _AllyList;
-		List<Trooper> excludedList_ = fraction == Trooper.Fraction.F_Enemy ? _AllyList : _EnemyList;
+		List<Trooper> targetList_ = side == Trooper.Side.F_Enemy ? _EnemyList : _AllyList;
+		List<Trooper> excludedList_ = side == Trooper.Side.F_Enemy ? _AllyList : _EnemyList;
 
 		if ( excludedList_.Contains(target) )
 		{
@@ -129,7 +129,7 @@ public class SquadManager : MonoBehaviour
 			SetCenterPoint();
 		}
 
-		UIManager.GetInstance().RegisterTrooper(target, fraction == Trooper.Fraction.F_Ally);
+		UIManager.GetInstance().RegisterTrooper(target, side == Trooper.Side.F_Ally);
 	}
 	
 	public void SelectTrooper(Trooper trooper)
@@ -200,9 +200,9 @@ public class SquadManager : MonoBehaviour
 		return res;
 	}
 	
-	public Trooper GetClosestVisibleTrooper(Trooper watcher, Trooper.Fraction fraction)
+	public Trooper GetClosestVisibleTrooper(Trooper watcher, Trooper.Side side)
 	{
-		List<Trooper> targetList_ = fraction == Trooper.Fraction.F_Ally ? _AllyList : _EnemyList;
+		List<Trooper> targetList_ = side == Trooper.Side.F_Ally ? _AllyList : _EnemyList;
 
 		if ( targetList_.Count == 0 )
 		{

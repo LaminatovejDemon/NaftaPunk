@@ -41,17 +41,16 @@ public class AttackHandler : MonoBehaviour
 			return;
 		}
 
-		if (_Target != null)
+	/*	if (_Target != null)
 		{
-			_Target._Body.renderer.material = _Target._Fraction == Trooper.Fraction.F_Ally ? SquadManager.GetInstance().TrooperAllyMaterial : SquadManager.GetInstance().TrooperEnemyMaterial;
-
-		}
+			_Target._Body.renderer.material = _Target._Side == Trooper.Side.F_Ally ? SquadManager.GetInstance().TrooperAllyMaterial : SquadManager.GetInstance().TrooperEnemyMaterial;
+		}*/
 
 		_Target = target;
 
 		if ( _Target != null )
 		{
-			_Target._Body.renderer.material = SquadManager.GetInstance().TrooperHitMaterial;
+	//		_Target._Body.renderer.material = SquadManager.GetInstance().TrooperHitMaterial;
 			SetGunfire(_Attacker._NamedAngle, true);
 		}
 	}

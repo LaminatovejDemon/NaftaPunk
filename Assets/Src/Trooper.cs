@@ -69,7 +69,7 @@ public class Trooper : MonoBehaviour {
 	public Renderer _BodySkinRenderer;
 	public Renderer _LegsSkinRenderer;
 
-	public enum Fraction
+	public enum Side
 	{
 		F_Enemy,
 		F_Ally,
@@ -95,8 +95,8 @@ public class Trooper : MonoBehaviour {
 	float _TargetAngle = 0;
 	float _ActualAngle = -1;
 
-	public Fraction _Fraction = Fraction.F_Ally;
-	Fraction _FractionLocal = Fraction.F_Invalid;
+	public Side _Side = Side.F_Ally;
+	Side _SideLocal = Side.F_Invalid;
 
 	private EnemyAI m_EnemyAI;
 	private HexData m_Spawner;
@@ -156,9 +156,9 @@ public class Trooper : MonoBehaviour {
 
 	public Vector3 _TargetPosition {get; private set;}
 
-	public void InvalidateFraction()
+	public void InvalidateSide()
 	{
-		_FractionLocal = Fraction.F_Invalid;
+		_SideLocal = Side.F_Invalid;
 	}
 
 	public HexData GetSpawner()
@@ -205,7 +205,7 @@ public class Trooper : MonoBehaviour {
 			return;
 		}
 
-		if ( _Fraction == Fraction.F_Ally )
+		if ( _Side == Side.F_Ally )
 		{
 			SquadManager.GetInstance().TargetHighlight(path[path.Count-1].transform.position);
 		}
@@ -240,7 +240,7 @@ public class Trooper : MonoBehaviour {
 		}		
 		_NextWatchTimestamp = Time.time + WATCH_DELTA_TIME;
 
-		if( _Fraction == Fraction.F_Enemy )
+		if( _Side == Side.F_Enemy )
 		{
 			m_EnemyAI.UpdateOnDemand();
 		}
@@ -281,23 +281,23 @@ public class Trooper : MonoBehaviour {
 
 	void SetFraction()
 	{
-		if ( _FractionLocal == _Fraction )
+		if ( _SideLocal == _Side )
 		{
 			return;
 		}
 
-		_FractionLocal = _Fraction;
-		collider.enabled = _FractionLocal == Fraction.F_Ally;
+		_SideLocal = _Side;
+		collider.enabled = _SideLocal == Side.F_Ally;
 
-		if( _FractionLocal == Fraction.F_Ally )
+		if( _SideLocal == Side.F_Ally )
 		{
 			Level.GetInstance().InitTrooper(this);
 
 			_TargetPosition = transform.position;
 			m_CarriesGrail = false;
 		}
-		SquadManager.GetInstance().RegisterTrooper(this, _FractionLocal);
-		_Body.renderer.material = _FractionLocal == Fraction.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
+		SquadManager.GetInstance().RegisterTrooper(this, _SideLocal);
+		_Body.renderer.material = _SideLocal == Side.F_Enemy ? SquadManager.GetInstance().TrooperEnemyMaterial : SquadManager.GetInstance().TrooperAllyMaterial;
 	}
 
 	float _NextWatchTimestamp = -1;
@@ -362,7 +362,7 @@ public class Trooper : MonoBehaviour {
 
 	public Trooper Watch()
 	{
-		return SquadManager.GetInstance ().GetClosestVisibleTrooper(this, _Fraction == Fraction.F_Ally ? Fraction.F_Enemy : Fraction.F_Ally);
+		return SquadManager.GetInstance ().GetClosestVisibleTrooper(this, _Side == Side.F_Ally ? Side.F_Enemy : Side.F_Ally);
 	}
 
 	public void Attack(Trooper target)

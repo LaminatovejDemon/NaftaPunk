@@ -96,7 +96,7 @@ public class HexData : MonoBehaviour
 
 			m_SpawnedTrooper = GameObject.Instantiate(SquadManager.GetInstance().EnemyTemplate) as GameObject;
 			Trooper trooperComp = m_SpawnedTrooper.GetComponent<Trooper>();
-			trooperComp._Fraction = Trooper.Fraction.F_Enemy;
+			trooperComp._Side = Trooper.Side.F_Enemy;
 			trooperComp.SetSpawner(this);
 			
 			m_SpawnedTrooper.transform.position = transform.position;
