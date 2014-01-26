@@ -126,7 +126,7 @@ public class Trooper : MonoBehaviour {
 
 	Angle GetNamedAngle(float angle)
 	{
-		if ( angle > 270 )
+		if ( angle > 270 && angle < 330 )
 			return Angle.Angle_300;
 		else if ( angle > 210 )
 			return Angle.Angle_240;
