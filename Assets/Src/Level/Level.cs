@@ -11,17 +11,18 @@ public class Level : MonoBehaviour
 	}
 
 	public GameObject m_SkillPointTemplate;
-
+	public GameObject m_GrailTemplate;
 
 	List<Trooper> m_Troopers = new List<Trooper> ();
 	List<GameObject> m_StartPositions = new List<GameObject> ();
 	List<GameObject> m_SkillPointPositions = new List<GameObject> ();
 	GameObject m_GrailPosition;
 
+	private GameObject m_GrailInstance;
+
 	private int m_TroopersKilled = 0;
 	private int m_SkillPointsPickedUp = 0;
 
-	private bool m_ResetDone = false;
 	void Awake()
 	{
 		_Instance = this;
@@ -39,10 +40,16 @@ public class Level : MonoBehaviour
 		{
 		}
 
-		if( Input.GetKey(KeyCode.Space) )
+		if( Input.GetKeyUp(KeyCode.Space) )
 		{
 			Reset ();
+			//SquadManager.GetInstance().KillGrailCarrier();
 		}
+	}
+
+	public GameObject GetGrailInstance()
+	{
+		return m_GrailInstance;
 	}
 	
 	void Init()
@@ -63,10 +70,20 @@ public class Level : MonoBehaviour
 
 					GameObject go = GameObject.Instantiate(m_SkillPointTemplate) as GameObject;
 					go.transform.position = hexData.transform.position + 0.5f*Vector3.up;
+					go.transform.rotation = Quaternion.identity;
 					go.transform.parent = hexData.transform;
 				}
+
 				if( hexData.m_Grail )
+				{
 					m_GrailPosition = hexData.gameObject;
+
+					m_GrailInstance = GameObject.Instantiate(m_GrailTemplate) as GameObject;
+					m_GrailInstance.transform.parent = hexData.transform;
+
+					m_GrailInstance.transform.position = m_GrailPosition.transform.position + Vector3.up*0.5f;
+					m_GrailInstance.transform.rotation = Camera.main.transform.rotation;
+				}
 			}
 		}
 
@@ -74,7 +91,6 @@ public class Level : MonoBehaviour
 
 	void Reset()
 	{
-
 		// zabiti enemaku
 		SquadManager.GetInstance ().KillAllEnemies ();
 
@@ -104,10 +120,12 @@ public class Level : MonoBehaviour
 			HexData hexData = transform.GetChild(i).GetComponent<HexData>();
 			if( hexData != null )
 			{
-				hexData.m_Grail = false;
+				hexData.SetContainsGrail(false);
 			}
 		}
-		m_GrailPosition.GetComponent<HexData> ().m_Grail = true;
+		m_GrailInstance.transform.parent = m_GrailPosition.transform;
+		m_GrailInstance.transform.position = m_GrailPosition.transform.position + Vector3.up*0.5f;
+		m_GrailPosition.GetComponent<HexData> ().SetContainsGrail (true);
 
 		// obnova trooperu
 		for (int i = m_Troopers.Count-1; i >= 0; --i)
@@ -142,6 +160,11 @@ public class Level : MonoBehaviour
 	public void SkillPointPickedUp()
 	{
 		m_SkillPointsPickedUp++;
+	}
+
+	public void AddKilledTrooper()
+	{
+		m_TroopersKilled++;
 	}
 
 	public void LevelDone()

@@ -88,7 +88,7 @@ public class SquadManager : MonoBehaviour
 		}
 	}
 	
-	public void OnKilled(Trooper target)
+	public void OnKilled(Trooper target, bool reset = false)
 	{
 		if( target.GetSpawner() != null )
 		{
@@ -103,6 +103,8 @@ public class SquadManager : MonoBehaviour
 			target.DropGrail();
 			target.InvalidateFraction();
 			target.gameObject.SetActive(false);
+			if( !reset )
+				Level.GetInstance().AddKilledTrooper();
 		}
 
 		UIManager.GetInstance().RegisterTrooper(target, false);
