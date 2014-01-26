@@ -201,6 +201,16 @@ public class Level : MonoBehaviour
 		m_SkillPointsPickedUp++;
 	}
 
+	public void DecreaseSkillPoints()
+	{
+		-- m_SkillPointsPickedUp;
+	}
+
+	public int SkillPointAmount()
+	{
+		return m_SkillPointsPickedUp;
+	}
+
 	public void AddKilledTrooper()
 	{
 		m_TroopersKilled++;
@@ -209,6 +219,8 @@ public class Level : MonoBehaviour
 
 	public void LevelDone()
 	{
+		Debug.Log ("Level done");
+		UIManager.GetInstance()._RewardScreen._Enabled = true;
 		//UIManager.GetInstance().r
 	}
 
