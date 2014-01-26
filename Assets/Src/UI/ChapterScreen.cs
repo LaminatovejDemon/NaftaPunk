@@ -27,9 +27,12 @@ public class ChapterScreen : MonoBehaviour
 
 	public void Start()
 	{
-		_TitleText.text = _TitleShadow.text = _TitleShadow2.text = _ChapterNumbers[Random.Range(0, _ChapterNumbers.Length)] + ". ACT"; 
+		if ( _Fraction == GameStateManager.EFractionType.Invalid )
+		{
+			_TitleText.text = _TitleShadow.text = _TitleShadow2.text = _ChapterNumbers[Random.Range(0, _ChapterNumbers.Length)] + ". ACT"; 
 
-		_DescriptionText.text = "bla bla, vsichni spolu valci\nbla bla, vsichni spolu valci bla\nbla bla, vsichni spolu valci valci\nbla bla, vsichni spolu.";
+			_DescriptionText.text = "bla bla, vsichni spolu valci\nbla bla, vsichni spolu valci bla\nbla bla, vsichni spolu valci valci\nbla bla, vsichni spolu.";
+		}
 
 		OnEnable();
 	}
