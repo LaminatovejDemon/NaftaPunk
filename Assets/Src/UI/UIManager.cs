@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
 	public Material DefaultPortrait;
 
 	public RewardScreen _RewardScreen;
+	public GameOverScreen _GameOverScreen;
+	public FractionSelectScreen _FractionSelectScreen;
 
 	public static UIManager GetInstance()
 	{
