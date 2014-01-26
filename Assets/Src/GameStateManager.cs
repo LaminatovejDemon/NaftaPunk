@@ -113,4 +113,12 @@ public class GameStateManager : MonoBehaviour
 		return m_GameStarted;
 	}
 
+	public void StartGame(EFractionType initFraction)
+	{
+		m_ActFraction = initFraction;
+		m_GameStarted = true;
+
+		Level.GetInstance().Init ();
+	}
+
 }

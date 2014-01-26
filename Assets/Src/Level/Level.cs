@@ -35,8 +35,10 @@ public class Level : MonoBehaviour
 
 	void Start()
 	{
-		//if( GameStateManager.GetInstance().WasGameStarted() )
+		if( GameStateManager.GetInstance().WasGameStarted() )
 			Init ();
+		else
+			UIManager.GetInstance()._FractionSelectScreen.gameObject.SetActive(true);
 	}
 
 	void Update()
@@ -63,7 +65,7 @@ public class Level : MonoBehaviour
 		return m_GrailInstance;
 	}
 	
-	void Init()
+	public void Init()
 	{
 		// instancovani postav
 		GameObject trooperTemplate = null;

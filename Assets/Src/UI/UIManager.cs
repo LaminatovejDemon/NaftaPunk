@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
 		return _Instance;
 	}
 
-	void Start()
+	void Awake()
 	{
 		_Instance = this;
 	}
