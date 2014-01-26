@@ -58,6 +58,7 @@ public class ChapterScreen : MonoBehaviour
 		}
 
 		UIManager.GetInstance()._HintBar.gameObject.SetActive(true);
+		UIManager.GetInstance()._HintBar.SetState(HintBar.State.Search);
 
 	}
 }

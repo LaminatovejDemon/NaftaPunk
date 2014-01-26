@@ -147,6 +147,7 @@ public class HexData : MonoBehaviour
 
 			if ( (t.transform.position - tr.transform.position).magnitude < Trooper.WALKING_TOLERANCE )
 			{
+				UIManager.GetInstance()._HintBar.SetState(HintBar.State.FoundGrail);
 				GameObject grail = Level.GetInstance().GetGrailInstance();
 				grail.transform.parent = null;
 				tr.CarryGrail(grail);
