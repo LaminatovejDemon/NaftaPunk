@@ -31,13 +31,13 @@ public class AttackHandler : MonoBehaviour
 
 	public void SetTarget(Trooper target)
 	{
+		if ( target == null )
+		{
+			SetGunfire(_Attacker._NamedAngle, false);
+		}
 		if (_Target == target) 
 		{
-			if ( target == null )
-			{
-				SetGunfire(_Attacker._NamedAngle, false);
-			}
-			
+
 			return;
 		}
 
@@ -62,6 +62,11 @@ public class AttackHandler : MonoBehaviour
 
 		if ( _Target != null )
 		{
+			if( _Target.GetKilled() )
+			{
+				SetTarget(null);
+				return;
+			}
 			if ( _Target._HealthBar._Health <= 0 )
 			{
 				SetTarget(null);

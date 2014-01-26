@@ -103,6 +103,7 @@ public class SquadManager : MonoBehaviour
 
 		if( target._Side == Trooper.Side.F_Ally )
 		{
+			target.SetKilled(true);
 			target.DropGrail();
 			target.InvalidateSide();
 			target.gameObject.SetActive(false);
