@@ -43,12 +43,7 @@ public class GameStateManager : MonoBehaviour
 		DontDestroyOnLoad(this);
 		_Instance = this;
 
-		m_CharacterStats.Add(c_Squad1Trooper1Name, new TCharStats(1, 1, 1));
-		m_CharacterStats.Add(c_Squad1Trooper2Name, new TCharStats(1, 1, 1));
-		m_CharacterStats.Add(c_Squad1Trooper3Name, new TCharStats(1, 1, 1));
-		m_CharacterStats.Add(c_Squad2Trooper1Name, new TCharStats(1, 1, 1));
-		m_CharacterStats.Add(c_Squad2Trooper2Name, new TCharStats(1, 1, 1));
-		m_CharacterStats.Add(c_Squad2Trooper3Name, new TCharStats(1, 1, 1));
+		ResetStats ();
 	}
 
 	public TCharStats GetStats(string charName)
@@ -61,7 +56,17 @@ public class GameStateManager : MonoBehaviour
 		m_CharacterStats[charName] = stats;
 	}
 
+	public void ResetStats()
+	{
+		m_CharacterStats.Clear ();
 
+		m_CharacterStats.Add(c_Squad1Trooper1Name, new TCharStats(1, 1, 1));
+		m_CharacterStats.Add(c_Squad1Trooper2Name, new TCharStats(1, 1, 1));
+		m_CharacterStats.Add(c_Squad1Trooper3Name, new TCharStats(1, 1, 1));
+		m_CharacterStats.Add(c_Squad2Trooper1Name, new TCharStats(1, 1, 1));
+		m_CharacterStats.Add(c_Squad2Trooper2Name, new TCharStats(1, 1, 1));
+		m_CharacterStats.Add(c_Squad2Trooper3Name, new TCharStats(1, 1, 1));
+	}
 
 
 }

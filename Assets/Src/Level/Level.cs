@@ -12,6 +12,7 @@ public class Level : MonoBehaviour
 
 	public GameObject m_SkillPointTemplate;
 	public GameObject m_GrailTemplate;
+	public GameObject m_TeleportParticle;
 
 	List<Trooper> m_Troopers = new List<Trooper> ();
 	List<GameObject> m_StartPositions = new List<GameObject> ();
@@ -61,7 +62,14 @@ public class Level : MonoBehaviour
 			{
 				// troops start positions 
 				if( hexData.m_Teleport )
+				{
 					m_StartPositions.Add(hexData.gameObject);
+
+					GameObject go = GameObject.Instantiate(m_TeleportParticle) as GameObject;
+					go.transform.parent = hexData.transform;
+					go.transform.position = hexData.transform.position;
+					go.transform.rotation = Quaternion.identity;
+				}
 
 				// skillpoint positions
 				if( hexData.m_SkillPoint )
