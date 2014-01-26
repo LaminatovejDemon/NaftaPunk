@@ -35,7 +35,8 @@ public class Level : MonoBehaviour
 
 	void Start()
 	{
-		Init ();
+		//if( GameStateManager.GetInstance().WasGameStarted() )
+			Init ();
 	}
 
 	void Update()
@@ -66,17 +67,19 @@ public class Level : MonoBehaviour
 	{
 		// instancovani postav
 		GameObject trooperTemplate = null;
-
+		string[] trooperNames = null;
 		GameStateManager.EFractionType fraction = GameStateManager.GetInstance ().GetFraction ();
 		switch( fraction )
 		{
 		case GameStateManager.EFractionType.Gyms:
 			trooperTemplate = m_GymTroopTemplate;
 			SquadManager.GetInstance().EnemyTemplate = m_GeographerTroopTemplate;
+			trooperNames = GameStateManager.Fraction1Names;
 			break;
 		case GameStateManager.EFractionType.Geographers:
 			trooperTemplate = m_GeographerTroopTemplate;
 			SquadManager.GetInstance().EnemyTemplate = m_GymTroopTemplate;
+			trooperNames = GameStateManager.Fraction2Names;
 			break;
 		}
 
@@ -84,7 +87,11 @@ public class Level : MonoBehaviour
 		{
 			GameObject go = GameObject.Instantiate(trooperTemplate) as GameObject;
 			go.name = "Trooper" + (i+1).ToString();
+
+			string trooperName = trooperNames[i];
+			GameStateManager.TCharStats stats = GameStateManager.GetInstance().GetStats(trooperName);
 			Trooper t = go.GetComponent<Trooper>();
+			t.SetRpgProperties(trooperName, stats.Health, stats.Speed, stats.Attack);
 		}
 
 		// inicializace hexu

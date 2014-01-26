@@ -91,6 +91,14 @@ public class Trooper : MonoBehaviour {
 	private List<Texture> _BodyTextureSet;
 	private List<Texture> _LegsTextureSet;
 
+	public void SetRpgProperties(string name, int health, int speed, int attack)
+	{
+		NAME = name;
+		_SkillHealth = health;
+		_SkillAttack = attack;
+		_SkillSpeed = speed;
+	}
+
 	Angle GetNamedAngle(float angle)
 	{
 		if ( angle > 270 )
