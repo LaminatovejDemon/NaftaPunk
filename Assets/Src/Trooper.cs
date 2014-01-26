@@ -17,6 +17,7 @@ public class Trooper : MonoBehaviour {
 	public GameStateManager.EFractionType _Fraction = GameStateManager.EFractionType.Gyms;
 
 	public Transform _GunfireParticle;
+	public Transform _BloodParticle;
 
 	public int _SkillSpeed = 1;
 	int _SkillSpeedLocal = -100;
@@ -108,6 +109,7 @@ public class Trooper : MonoBehaviour {
 	private HexData m_Spawner;
 
 	private bool m_CarriesGrail = false;
+	private bool m_Killed = false;
 
 	private List<Texture> _BodyTextureSet;
 	private List<Texture> _LegsTextureSet;
@@ -160,6 +162,16 @@ public class Trooper : MonoBehaviour {
 		ret_ = (int)((ret_+30.0f)/60.0f) * 60 % 360;
 
 		return ret_;
+	}
+
+	public void SetKilled(bool state)
+	{
+		m_Killed = state;
+	}
+
+	public bool GetKilled()
+	{
+		return m_Killed;
 	}
 
 	public Vector3 _TargetPosition {get; private set;}
@@ -304,6 +316,7 @@ public class Trooper : MonoBehaviour {
 		{
 			Level.GetInstance().InitTrooper(this);
 			m_CarriesGrail = false;
+			m_Killed = false;
 		}
 		_TargetPosition = transform.position;
 		SquadManager.GetInstance().RegisterTrooper(this, _SideLocal);
