@@ -14,9 +14,9 @@ public class GameStateManager : MonoBehaviour
 	public const string c_Squad1Trooper1Name = "Kamil Lhotak";
 	public const string c_Squad1Trooper2Name = "Umberto Eco";
 	public const string c_Squad1Trooper3Name = "Gaudi";
-	public const string c_Squad2Trooper1Name = "Sancho Panza";
-	public const string c_Squad2Trooper2Name = "Your Mom";
-	public const string c_Squad2Trooper3Name = "Antonin Panenka";
+	public const string c_Squad2Trooper1Name = "Frederic Tatum";
+	public const string c_Squad2Trooper2Name = "Boris Felps";
+	public const string c_Squad2Trooper3Name = "Repka nebo Bubka";
 
 	public static string[] Fraction1Names = {c_Squad1Trooper1Name, c_Squad1Trooper2Name, c_Squad1Trooper3Name};
 	public static string[] Fraction2Names = {c_Squad2Trooper1Name, c_Squad2Trooper2Name, c_Squad2Trooper3Name};
