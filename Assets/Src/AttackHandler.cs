@@ -57,6 +57,9 @@ public class AttackHandler : MonoBehaviour
 
 	void Update()
 	{
+		//SetGunfire((Trooper.Angle)(((int)(Time.time)) % 6), true);
+		//SetGunfire(Trooper.Angle.Angle_300, true);
+
 		if ( _Target != null )
 		{
 			if ( _Target._HealthBar._Health <= 0 )

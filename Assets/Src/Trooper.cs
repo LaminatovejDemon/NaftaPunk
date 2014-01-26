@@ -14,6 +14,7 @@ public class Trooper : MonoBehaviour {
 	public float WATCH_DELTA_TIME = 0.5f;
 	public float SHOOT_ANGLE_DOT = 0.8f;
 	public string NAME = "Abdul";
+	public GameStateManager.EFractionType _Fraction = GameStateManager.EFractionType.Gyms;
 
 	public Transform _GunfireParticle;
 
@@ -379,7 +380,7 @@ public class Trooper : MonoBehaviour {
 		_ActualAngle = _TargetAngle;
 		_AttackHandler.SetTarget(null);
 
-		_BodyTextureSet = SquadManager.GetInstance().GetComponent<Atlas>().GetTexture((int)_ActualAngle);
+		_BodyTextureSet = SquadManager.GetInstance().GetComponent<Atlas>().GetTexture((int)_ActualAngle, _Fraction);
 		_LegsTextureSet = SquadManager.GetInstance().GetComponent<Atlas>().GetLegsTexture((int)_ActualAngle);
 
 		if ( _BodyTextureSet.Count > 0 )
