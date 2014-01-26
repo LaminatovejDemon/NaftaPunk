@@ -17,12 +17,29 @@ public class MusicManager : MonoBehaviour {
 	public List<AudioClip> _BerserkGym;
 	public List<AudioClip> _DeathArt; 
 	public List<AudioClip> _DeathGym; 
+	public List<AudioClip> _GunArt;
+	public List<AudioClip> _GunGym;
+
 
 	static MusicManager _Instance = null;
 
 	public static MusicManager GetInstance()
 	{
 		return _Instance;
+	}
+
+	public AudioClip GetClip(OneShots shot)
+	{
+		switch (shot)
+		{
+		case OneShots.Gunfire_Art:
+			return _GunArt[Random.Range(0, _GunArt.Count)];
+
+		case OneShots.Gunfire_Gym:
+			return _GunGym[Random.Range(0, _GunGym.Count)];
+		}
+
+		return null;
 	}
 
 	// Use this for initialization
@@ -55,6 +72,8 @@ public class MusicManager : MonoBehaviour {
 		Berserk_Gym,
 		Death_Art,
 		Death_Gym,
+		Gunfire_Art,
+		Gunfire_Gym,
 	};
 
 	public void PlayOneShot(OneShots shot)
